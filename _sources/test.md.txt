@@ -1,0 +1,59 @@
+# title
+
+```{note}
+This is a standard note callout box.
+```
+
+```{warning}
+Be careful! This action might overwrite your current configuration.
+```
+
+```{tip}
+You can use `make clean` before building to ensure a fresh render.
+```
+
+
+```{admonition} Pro-Tip for Advanced Users
+:class: hint
+
+This is a custom callout box with its own unique title.
+```
+
+
+```python
+def greet(name: str) -> str:
+    """Return a personalized greeting."""
+    return f"Hello, {name}!"
+
+print(greet("World"))
+```
+
+
+```{code-block} python
+:linenos:
+:emphasize-lines: 3
+:caption: example.py
+
+def greet(name: str) -> str:
+    """Return a personalized greeting."""
+    return f"Hello, {name}!" # This line will be highlighted
+```
+
+
+```{code-block} python
+:caption: app.py
+
+def main():
+    print("This block now has a title bar!")
+```
+
+
+```{admonition} Script: initialization.py
+:class: note
+
+```python
+import os
+
+def setup():
+    os.makedirs("docs", exist_ok=True)
+```

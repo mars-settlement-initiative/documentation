@@ -1,0 +1,80 @@
+Introduction: explore mars_colony
+=================================
+
+**Folder:** ``mars_colony``. **Task:** read, run and explain the supplied code.
+No implementation is required, even where the file contains a
+``STUDENT MODIFICATION AREA`` marker. Coding begins in :doc:`mission_01`.
+
+Read the files in this order
+----------------------------
+
+#. ``config.py``: dimensions, populations, energy and experiment settings.
+#. ``model.py``: initialization, grid placement, activation and data collection.
+#. ``agents.py``: shared mechanics and explorer/collector decision policies.
+#. ``run.py`` and ``app.py``: execution and visualization.
+#. ``analysis.py``: a single experiment exporting ``mars_results.csv``.
+   See :doc:`experiments` for the three-folder comparison.
+
+The shared world
+----------------
+
+The non-wrapping 20 by 20 grid contains a central base, two explorers, three
+collectors and 12 deposits of 20 units. The base starts with 100 units and
+consumes one per tick. Robots start with 100 energy; collectors carry 10 units.
+Locate these settings in ``config.py``.
+
+``ResourceAgent`` represents a stationary deposit. ``RobotAgent`` supplies
+movement, energy accounting and recharge. Explorers and collectors inherit
+those mechanics and supply different decisions.
+
+Trace one model tick
+---------------------
+
+In ``MarsColonyModel.step``, Mesa selects and activates robots:
+
+.. code-block:: python
+
+   robots = self.agents.select(
+       lambda agent: isinstance(agent, RobotAgent)
+   )
+   robots.shuffle_do("step")
+
+After their turns, the model subtracts consumption, increments
+``steps_survived``, collects data and stops if supplies are depleted. It also
+records the initial state before any turns. Resource agents are not activated.
+
+An explorer first checks its current cell for a deposit and publishes new
+locations in ``known_resources``. It returns toward base below 20 energy or
+moves randomly otherwise, then checks for recharge.
+
+A collector first collects at its existing target, unloads at base and checks
+for recharge. Its decision block then returns below 25 energy, returns with
+cargo, or chooses and approaches the nearest known resource. A deposit reached
+by movement is collected on a later turn; cargo arriving at base is likewise
+unloaded on a later turn. Notice the separation of mechanics and decisions.
+
+Details worth noticing
+-----------------------
+
+* Targeted movement goes horizontally first, then vertically.
+* The movement helper charges energy and increments its distance counter even
+  when called with the current position. The counter is not always geometric
+  displacement. Preserve this mechanic when comparing exercises.
+* Inactive robots immediately return from ``step``. Examine the placement of
+  recharge calls; reaching zero energy does not guarantee later recovery.
+* Empty deposits are removed from both the grid and Mesa's agent registry.
+  Partially collected deposits remain available.
+* A remembered target can become stale when another robot empties the deposit.
+
+Exploration checklist
+---------------------
+
+#. Run seed 42 and record survival, deliveries and distance.
+#. Locate the lines that register an agent and place it on the grid.
+#. Follow an explorer from perception to publication of a resource location.
+#. Follow a collector through selection, travel, collection and unloading.
+#. Explain one interaction between robots using an observed example.
+#. Explain why a sensible local choice might produce a poor collective outcome.
+
+Bring your baseline report and explanation to Exercise 1. Keep this folder
+unchanged as the reference for subsequent experiments.

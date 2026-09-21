@@ -1,0 +1,89 @@
+Exercise 1: design robot decision rules
+========================================
+
+**Working folder:** ``mars_colony_2``. **Edit:** decision logic in ``agents.py``.
+Your goal is to turn an observation from the introduction into a rule change,
+then explain its effect on the multi-agent system.
+
+What changes from the introduction?
+------------------------------------
+
+Folder 2 starts with the same baseline decision behaviour and world settings
+as Folder 1. Some constructor defaults are written as literals rather than
+imported constants, but their supplied values agree. There is no new scheduler
+or space API to learn here: you change policies inside the existing Mesa agents.
+
+Explorers initially move randomly and return below an energy threshold.
+Collectors initially select the nearest known deposit without coordinating
+target choices. These are starting policies, not missing implementations.
+
+What you may change
+--------------------
+
+Work in the marked ``STUDENT MODIFICATION AREA`` decision blocks of
+``ExplorerAgent.step`` and/or ``CollectorAgent.step``. You may adapt
+``choose_nearest_resource``, add decision helper methods and individual memory
+needed by your policy. Keep such additions inside ``agents.py`` and identify
+them in your explanation.
+
+Keep ``RobotAgent`` movement/energy mechanics, discovery, collection, unloading,
+recharge, capacity and agent registration unchanged. Preserve the operations
+before each decision block and the explorer's recharge check. Keep
+``config.py``, ``model.py``, ``app.py``, ``run.py`` and evaluation code fixed.
+
+Use known resource locations, your robot's state and memory, and other active
+collectors' shared targets if studying coordination. Do not inspect hidden
+deposit locations or remote deposit quantities, create resources, teleport,
+add energy or call movement repeatedly to gain extra actions in a turn.
+Shared targets indicate intentions; they do not reserve a deposit.
+
+Choose a question
+------------------
+
+* Can exploration memory reduce repeated visits?
+* Can a return decision use Manhattan distance to base as well as energy?
+* Can target selection account for other collectors' intentions?
+* Can collectors recover more effectively from stale targets?
+
+Start with one change. Improving every component at once makes the result
+harder to explain. For a focused comparison with Exercise 2, choose a collector
+policy: Folder 3 retains the original explorer rules.
+
+Implementation workflow
+------------------------
+
+#. Record the unchanged Folder 2 result for seed 42 and compare it with Folder 1.
+#. Write: "If we change ___, we expect ___ because ___."
+#. Identify the state read by your rule, its decision and its action.
+#. Implement the rule using the existing movement and interaction helpers.
+#. Inspect a short run: check boundaries, energy, cargo and stale-target cases.
+#. Repeat the same seed and then evaluate seeds 10, 20, 30, 40 and 50 using
+   :doc:`experiments`.
+
+.. code-block:: powershell
+
+   ./.venv/Scripts/python.exe mars_colony_2/run.py --batch --steps 500 --seed 42
+   ./.venv/Scripts/python.exe mars_colony_2/run.py --port 8766
+
+Reason about interactions
+--------------------------
+
+A locally nearest target may attract several collectors. Avoiding that target
+could reduce wasted travel, but a 20-unit deposit can supply two 10-unit loads.
+Explain when sharing helps and when it causes delay. Likewise, returning early
+may protect a robot while delaying urgently needed deliveries.
+
+A successful investigation need not beat the baseline on every seed. It must
+show that the implementation matches your hypothesis and that your conclusions
+follow from observations and repeated comparisons.
+
+Completion checklist
+---------------------
+
+* A readable code change identifying modified methods and any added state.
+* A short explanation connecting your change to Mesa agent state and activation.
+* Baseline and modified results for the same five seeds, with averages and spread.
+* One traced example of decision → interaction → colony outcome.
+* A limitation or counterexample, and a proposed next experiment.
+
+Continue with :doc:`mission_02` to investigate a different decision mechanism.

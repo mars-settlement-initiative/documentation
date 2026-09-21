@@ -1,0 +1,79 @@
+# Mesa concepts used in this practical
+
+Mesa supplies the simulation framework. You supply the meaning of each agent,
+its information and its decision rules. A multi-agent system (MAS) contains
+interacting agents whose actions affect a shared environment. Explorers and
+collectors have different roles but depend on each other to supply the base.
+
+## Map the concepts to the code
+
+| Concept | Mars code | Responsibility |
+|---|---|---|
+| Agent | `mesa.Agent`, then `RobotAgent`, `ExplorerAgent`, `CollectorAgent` | Individual state and behaviour |
+| Model | `MarsColonyModel(mesa.Model)` | Creates agents and applies colony rules |
+| Environment | `MultiGrid`, deposits, base and shared information | Movement, discovery and interaction |
+| Activation | `self.agents.select(...)`, then `shuffle_do("step")` | Gives selected robots turns in shuffled order |
+| Measurement | `DataCollector` | Records state for plots and analysis |
+
+## Registration and placement
+
+In `agents.py`, `super().__init__(model)` initializes a Mesa agent and registers
+it with the model. In `model.py`, `grid.place_agent(agent, position)` places it
+in space. Registration alone does not assign a grid location. After placement,
+`self.pos` gives its position.
+
+The model initializes Mesa with `super().__init__(seed=seed)`. The supplied
+code uses `self.random` for random decisions. Record the seed to repeat a run.
+
+## Individual and shared state
+
+A robot owns `energy`, `active` and `distance_travelled`; a collector also owns
+`cargo` and `target_resource`. The model owns `base_resources` and
+`known_resources`. A deposit owns `amount` and `discovered`.
+
+`self.model` gives agents access to the simulation. Technical access to objects
+does not mean a policy should know everything: explorers must discover deposits,
+and collectors use known locations. Respect that information boundary.
+
+## Space and activation
+
+These folders use `mesa.space.MultiGrid`, integer `(x, y)` positions and
+`place_agent`, `move_agent` and `get_cell_list_contents`. Several agents can
+share a cell. `torus=False` prevents wrapping at boundaries. Robot methods
+impose horizontal/vertical movement and energy costs; those are application
+rules, not automatic MultiGrid behaviour.
+
+Other Mesa tutorials use `CellAgent` and `mesa.discrete_space`. Those have a
+different spatial interface; follow the MultiGrid interface in this practical.
+
+An agent's `step()` is one local turn. The model's `step()` activates robots,
+applies consumption and records measurements. Shuffled activation is sequential:
+a later collector can encounter a deposit emptied earlier in the same tick.
+
+## From individual decisions to system outcomes
+
+Explorers publish discovered positions in `known_resources`; collectors read
+this shared information. This resembles a shared information board, rather than
+explicit message passing or negotiation. Targets are intentions, not reservations.
+Two individually reasonable nearest-target choices can therefore overlap.
+
+Use this explanation chain throughout the practical:
+
+**Individual decision → interaction pattern → colony outcome.**
+
+A target-selection rule might reduce overlapping journeys and change delivery
+timing. Test that hypothesis: fewer overlaps alone do not prove longer survival,
+and one deposit can supply more than one load.
+
+## Check your understanding
+
+1. Why is cargo agent state but base supplies model state?
+2. Why are resources registered agents but excluded from robot activation?
+3. How can activation order affect collectors approaching the same deposit?
+4. What information can a collector use, and what is hidden?
+5. Which parts are supplied by Mesa and which are application rules?
+
+Consult the official [Agent reference](https://mesa.readthedocs.io/stable/apis/agent.html),
+[space reference](https://mesa.readthedocs.io/stable/apis/space.html) and
+[DataCollector reference](https://mesa.readthedocs.io/stable/apis/datacollection.html).
+Use the version pinned in the course requirements.

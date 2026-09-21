@@ -1,0 +1,152 @@
+Exercise 2: investigate prompt-driven decisions
+===============================================
+
+**Working folder:** ``mars_colony_3``. **Edit:** the strategy section below
+``CHALLENGE 2: STUDENTS MAY EDIT THE STRATEGY BELOW`` in ``prompt.txt``.
+Investigate whether a prompt produces useful collector decisions and how those
+decisions affect interactions and colony survival.
+
+What changes from Exercise 1?
+-----------------------------
+
+The world, Mesa activation, consumption and physical mechanics remain the same.
+Explorers retain their original rules. Collector turns still begin with
+collection, unloading and recharge, but their decision block now follows:
+
+.. code-block:: text
+
+   create_observation()
+       → decision_engine.decide(observation)
+       → validate or fall back to rules
+       → execute one action using the existing mechanics
+
+The supplied implementation adds the following components for you to read:
+
+.. list-table:: Code changes already provided
+   :header-rows: 1
+
+   * - File
+     - Responsibility
+   * - ``agents.py``
+     - Builds collector observations and executes actions;
+       ``baseline_step()`` preserves the original policy as a reference.
+   * - ``model.py``
+     - Makes the decision engine available to agents.
+   * - ``llm_decision.py``
+     - Routes decisions, validates actions, continues journeys, handles
+       fallback and records decision logs.
+   * - ``gemini_client.py`` / ``llm_config.py``
+     - Provider requests and model, pacing, cadence and call-limit settings.
+   * - ``prompt.txt``
+     - Instructions for one collector; the strategy section is your edit area.
+   * - ``metrics.py``, ``analysis.py``, ``benchmark_worker.py``
+     - Measure and compare the actual code in all three folders.
+
+This is a hybrid agent: an LLM can guide empty collectors, while fixed rules
+handle loaded returns and the simulation mechanics. It does not control the
+whole colony or rewrite Python. Folder 2 student changes are not inherited by
+Folder 3; disclose any explorer changes when interpreting their comparison.
+
+Information and allowed actions
+-------------------------------
+
+The observation includes the collector's position, energy, cargo, capacity,
+base location, known deposits, remembered target and other active collectors'
+shared targets. Undiscovered locations and deposit quantities are withheld.
+A remembered target can be depleted. Shared targets are not reservations.
+
+``COLLECT_x_y``
+   Select a permitted target and move one cell toward it. Collection occurs
+   through the existing mechanics at the beginning of a later turn after arrival.
+
+``RETURN_BASE``
+   Move one cell toward base. Loaded collectors return automatically.
+   Empty collectors at base cannot select this action.
+
+``WAIT``
+   Stay still without movement energy cost and retain target memory. The base
+   still consumes supplies, so waiting is not free at the system level.
+
+Actions are checked against ``allowed_actions``. Invalid or unavailable LLM
+responses can fall back to the baseline policy. A valid but poor decision can
+still harm performance. A journey may continue across turns without a fresh
+request; one model tick does not imply one LLM call.
+
+Requirements and workflow
+--------------------------
+
+#. Run the offline demonstration and trace an observation, action and outcome.
+#. Write a hypothesis about energy, target overlap or waiting.
+#. Preserve the prompt's observation/action contract and edit only its strategy
+   section. Keep Python, world settings and decision cadence fixed.
+#. Run the supplied prompt in live mode as your prompt baseline, then start a
+   fresh live run after your edit. Save both versions and outputs separately.
+#. Compare matched seeds and inspect decision sources before attributing any
+   effect to the LLM. Follow :doc:`experiments` for cross-folder evaluation.
+
+Start offline
+--------------
+
+From the student project root:
+
+.. code-block:: powershell
+
+   ./.venv/Scripts/python.exe mars_colony_3/run.py --batch --mode mock --seed 42
+
+**Mock mode uses coded rules, not an LLM.** It demonstrates the interface and
+provides an offline comparison. Editing the prompt does not test your strategy
+in mock mode. If live access is unavailable, report the prompt as an untested
+hypothesis and clearly label any offline results.
+
+Run the live experiment
+-----------------------
+
+Use the course-provided Gemini setup instructions in ``mars_colony_3/README.md``.
+The supplied launcher prompts for a key without saving it to disk:
+
+.. code-block:: powershell
+
+   ./mars_colony_3/gemini_setup.ps1
+
+For a terminal experiment, set the key for that terminal and run:
+
+.. code-block:: powershell
+
+   $env:GEMINI_API_KEY = [System.Net.NetworkCredential]::new('', (Read-Host 'Gemini API key' -AsSecureString)).Password
+   ./.venv/Scripts/python.exe mars_colony_3/run.py --batch --mode gemini --seed 42 --steps 50 --max-calls 10
+
+Keep keys out of prompts and submitted files. Account access and quotas depend
+on the provider; the code does not set your account's billing tier. The short
+run above is for inspecting decisions, not the full 500-tick benchmark.
+
+The supplied Gemini defaults space requests by 15 seconds and reconsider
+journeys within 10 ticks. These are code settings, not a statement of provider
+quotas. Keep model, cadence and call ceiling identical across prompt variants.
+Live runs can take substantially longer than offline simulation.
+
+Read the evidence
+------------------
+
+Batch runs create a new directory under ``mars_colony_3/results`` containing
+``report.json``, ``decisions.jsonl``, the actual ``prompt.txt`` and
+``timeseries.csv``. Inspect observations, actions and sources in the decision
+log. A plausible generated explanation is not proof of the cause of an outcome.
+
+* ``mock_rules`` means offline rules.
+* ``llm`` means the run used valid LLM decisions without fallback.
+* ``llm_with_fallback`` means a mixture of LLM decisions and baseline rules.
+* ``no_llm_decisions`` means live mode produced no valid LLM choice.
+
+Also inspect ``llm_decisions``, ``continued_llm_decisions`` and
+``fallback_decisions``. A small API budget can leave much of a run controlled
+by fallback rules; disclose that when discussing the effect of a prompt.
+
+Completion checklist
+---------------------
+
+* Original and revised prompts, with a hypothesis and explanation of the edit.
+* Results for matched seeds, including Folder 1 and your actual Folder 2 rules.
+* Provider/model, cadence, call limit and counts of LLM, continued and fallback
+  decisions, so readers know what controlled the robots.
+* A traced decision showing its interaction with another robot or shared resource.
+* A conclusion about performance, variability and limitations of the evidence.

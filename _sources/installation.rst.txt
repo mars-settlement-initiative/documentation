@@ -1,0 +1,49 @@
+Set up and run the practical
+============================
+
+Use Python 3.12 or newer. The supplied requirements pin Mesa to **3.5.1**.
+Open a terminal in the student project root containing ``mars_colony``,
+``mars_colony_2`` and ``mars_colony_3``. This is separate from the Sphinx
+documentation project. Campus-delivery files at the student project root are
+outside this Mars practical.
+
+On Windows, create an environment if needed and install the requirements:
+
+.. code-block:: powershell
+
+   py -3.12 -m venv .venv
+   ./.venv/Scripts/python.exe -m pip install -r requirements.txt
+   ./.venv/Scripts/python.exe -m pip install -r mars_colony_3/requirements.txt
+
+On macOS/Linux use ``python3 -m venv .venv`` and replace
+``./.venv/Scripts/python.exe`` with ``./.venv/bin/python`` below.
+
+Introduction
+------------
+
+.. code-block:: powershell
+
+   ./.venv/Scripts/python.exe mars_colony/run.py --port 8765
+   ./.venv/Scripts/python.exe mars_colony/run.py --batch --steps 500 --seed 42
+
+The first command opens the dashboard. Stop its server with Ctrl+C before
+continuing in the same terminal. The second prints a terminal report.
+
+Exercises
+---------
+
+.. code-block:: powershell
+
+   ./.venv/Scripts/python.exe mars_colony_2/run.py --port 8766
+   ./.venv/Scripts/python.exe mars_colony_2/run.py --batch --steps 500 --seed 42
+   ./.venv/Scripts/python.exe mars_colony_3/run.py --mode mock --port 8767
+   ./.venv/Scripts/python.exe mars_colony_3/run.py --batch --mode mock --seed 42
+
+Folder 3's ``mock`` mode requires no credentials and makes no LLM calls.
+Specify it explicitly: the supplied default is online Gemini mode. Follow
+:doc:`mission_02` for the prompt experiment.
+
+If a package is missing, install requirements with the same Python executable
+used to run the simulation. If a path is missing, check your working directory.
+Run each folder through its own entry point: identically named modules such as
+``agents`` and ``model`` belong to different copies of the simulation.

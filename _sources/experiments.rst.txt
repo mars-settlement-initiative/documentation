@@ -1,0 +1,109 @@
+Compare strategies and explain results
+======================================
+
+Use the same world, seeds and step limit for each strategy. Keep Folder 1
+unchanged. Save each code or prompt version alongside its results. Do not use
+a single successful run as evidence that a policy is generally better.
+
+Run the supplied comparison
+---------------------------
+
+From the student project root:
+
+.. code-block:: powershell
+
+   ./.venv/Scripts/python.exe mars_colony_3/analysis.py --mode mock
+
+This runs the current code in all three folders using seeds 10, 20, 30, 40 and
+50 with a maximum of 500 ticks. The seeds represent different initial worlds
+under the same configuration, not five different rule sets. Folder 2 edits
+are included; Folder 3 uses offline rules in this command.
+
+For a live comparison after configuring credentials:
+
+.. code-block:: powershell
+
+   ./.venv/Scripts/python.exe mars_colony_3/analysis.py --mode gemini --max-calls 20
+
+The live call ceiling applies per run, not to the entire five-seed benchmark.
+The script checks matching world settings and uses separate processes to avoid
+mixing the folders' identically named modules. Results are saved in a new
+benchmark directory under ``mars_colony_3/results``.
+
+Read ``benchmark.csv`` or ``benchmark.json`` for individual runs,
+``summary.json`` for means and sample standard deviations, and
+``paired_differences.json`` for each strategy minus Folder 1 on the same seed.
+The latter does not directly calculate revised-prompt minus original-prompt
+differences: compare your saved prompt runs seed by seed as well.
+
+Metrics and their meaning
+-------------------------
+
+.. list-table:: Common benchmark metrics
+   :header-rows: 1
+
+   * - Metric
+     - Interpretation
+   * - ``steps_survived``
+     - Ticks executed, including the tick on which supplies are depleted.
+   * - ``resources_collected``
+     - Resources delivered to base; excludes cargo still being carried.
+       The model stores this as ``total_resources_collected``.
+   * - ``distance_travelled``
+     - Sum of original movement counters, including the same-position helper
+       calls described in :doc:`agent`.
+   * - ``failed_robots``
+     - Robots inactive at the end of the run.
+   * - ``idle_collector_steps``
+     - Active-at-start collector turns with no recorded movement.
+   * - ``duplicate_target_steps``
+     - After each tick, extra active empty collectors sharing a still-known
+       target. Three collectors sharing one target add two.
+
+Duplicate targeting measures overlapping intentions, not the number of new
+duplicate selections. Less distance or less overlap is not automatically
+better: interpret these alongside delivery timing and survival.
+
+With 100 initial base units and 12 deposits of 20, only 340 resource units
+exist. Consumption is one per tick, so **340 ticks is an upper bound** under
+the fixed world. The 500-tick setting is a run limit, not an achievable survival
+target. High starting robot energy can also make failures uncommon.
+
+Build a fair explanation
+------------------------
+
+Matched seeds give comparable initial worlds. A changed policy may consume
+different random draws, so later trajectories can diverge. Live LLM responses
+can vary even with the same simulation seed. Report per-seed values, means and
+spread; repeat live runs when assessing that additional variability.
+
+Use this record for each comparison:
+
+.. list-table:: Experiment record
+   :header-rows: 1
+
+   * - Seed
+     - Strategy / version
+     - Survival
+     - Delivered
+     - Distance
+     - Interaction observed
+   * - 10
+     - Baseline
+     - ...
+     - ...
+     - ...
+     - ...
+   * - 10
+     - Your policy or prompt
+     - ...
+     - ...
+     - ...
+     - ...
+
+Explain **individual decision → interaction pattern → system outcome** using
+a trace and the aggregate results. Distinguish observations from explanations:
+if survival improved, identify evidence for the mechanism you propose. Discuss
+one seed where the change failed or helped less, and one competing explanation.
+For Exercise 2, include decision sources and fallback counts. If Exercise 1
+changed explorers, the Folder 2/3 comparison also includes that difference.
