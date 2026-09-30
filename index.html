@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Set up and run the practical" href="installation.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Mars Colony setup" href="mars_colony_setup.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>MESA Tutorial 0.1 documentation</title>
@@ -194,9 +194,8 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Practical guide</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Set up and run the practical</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Introduction%20to%20Mesa.html">Mesa concepts used in this practical</a></li>
-<li class="toctree-l1"><a class="reference internal" href="agent.html">Introduction: explore mars_colony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mars_colony_setup.html">Mars Colony setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mesa_mars_colony_guide.html">Introduction to Mesa and the Mars colony</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mission_01.html">Exercise 1: design robot decision rules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mission_02.html">Exercise 2: investigate prompt-driven decisions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="experiments.html">Compare strategies and explain results</a></li>
@@ -242,6 +241,8 @@
 <h1>Mesa and multi-agent systems: Mars Colony<a class="headerlink" href="#mesa-and-multi-agent-systems-mars-colony" title="Link to this heading">¶</a></h1>
 <p>Explore a working Mesa simulation, then investigate how individual robot
 decisions affect the colony through two exercises.</p>
+<a class="reference internal image-reference" href="_images/mission-01-baseline.gif"><img alt="alternate text" class="align-right" height="540" src="_images/mission-01-baseline.gif" width="720" />
+</a>
 <div class="table-wrapper docutils container" id="id1">
 <table class="docutils align-default" id="id1">
 <caption><span class="caption-text">Your learning route</span><a class="headerlink" href="#id1" title="Link to this table">¶</a></caption>
@@ -252,48 +253,46 @@ decisions affect the colony through two exercises.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mars_colony</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mars-colony-foundation</span></code></p></td>
 <td><p>Introduction: explore the code. No coding required.</p></td>
 <td><p>Explain a simulation tick and record baseline observations.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mars_colony_2</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mars-colony-robot-decisions</span></code></p></td>
 <td><p>Exercise 1: change Python decisions in <code class="docutils literal notranslate"><span class="pre">agents.py</span></code>.</p></td>
 <td><p>Explain and evaluate your rule changes.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mars_colony_3</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mars-colony-llm</span></code></p></td>
 <td><p>Exercise 2: edit the strategy in <code class="docutils literal notranslate"><span class="pre">prompt.txt</span></code>.</p></td>
 <td><p>Evaluate prompt-driven collector choices using results and logs.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p><strong>Folder numbers are not exercise numbers.</strong> Keep Folder 1 unchanged as your
-reference. Folder 2 starts with equivalent baseline behaviour. Folder 3 adds
-a collector decision interface to the same world; your Folder 2 edits are
+<p>Keep mars-colony-foundation unchanged as your
+reference. mars-colony-robot-decisions starts with equivalent baseline behaviour. mars-colony-llm adds
+a collector decision interface to the same world; your mars-colony-robot-decisions edits are
 not automatically copied into it.</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Practical guide</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Set up and run the practical</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#exercises">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mars_colony_setup.html">Mars Colony setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mars_colony_setup.html#get-the-assignment-from-github">1. Get the assignment from GitHub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mars_colony_setup.html#open-the-assignment-folder">2. Open the assignment folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mars_colony_setup.html#create-a-virtual-environment">3. Create a virtual environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mars_colony_setup.html#check-that-the-simulation-works">4. Check that the simulation works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mars_colony_setup.html#open-the-interactive-dashboard">5. Open the interactive dashboard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mars_colony_setup.html#common-problems">Common problems</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Introduction%20to%20Mesa.html">Mesa concepts used in this practical</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Introduction%20to%20Mesa.html#map-the-concepts-to-the-code">Map the concepts to the code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Introduction%20to%20Mesa.html#registration-and-placement">Registration and placement</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Introduction%20to%20Mesa.html#individual-and-shared-state">Individual and shared state</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Introduction%20to%20Mesa.html#space-and-activation">Space and activation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Introduction%20to%20Mesa.html#from-individual-decisions-to-system-outcomes">From individual decisions to system outcomes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Introduction%20to%20Mesa.html#check-your-understanding">Check your understanding</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="agent.html">Introduction: explore mars_colony</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="agent.html#read-the-files-in-this-order">Read the files in this order</a></li>
-<li class="toctree-l2"><a class="reference internal" href="agent.html#the-shared-world">The shared world</a></li>
-<li class="toctree-l2"><a class="reference internal" href="agent.html#trace-one-model-tick">Trace one model tick</a></li>
-<li class="toctree-l2"><a class="reference internal" href="agent.html#details-worth-noticing">Details worth noticing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="agent.html#exploration-checklist">Exploration checklist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mesa_mars_colony_guide.html">Introduction to Mesa and the Mars colony</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mesa_mars_colony_guide.html#find-your-way-around-the-code">1. Find your way around the code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mesa_mars_colony_guide.html#understand-the-shared-world">2. Understand the shared world</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mesa_mars_colony_guide.html#agents-registration-state-and-roles">3. Agents: registration, state and roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mesa_mars_colony_guide.html#model-shared-state-and-placement">4. Model: shared state and placement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mesa_mars_colony_guide.html#environment-space-and-interaction">5. Environment: space and interaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mesa_mars_colony_guide.html#trace-one-simulation-tick">6. Trace one simulation tick</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mesa_mars_colony_guide.html#connect-local-decisions-to-colony-outcomes">7. Connect local decisions to colony outcomes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mesa_mars_colony_guide.html#explore-the-baseline-and-check-your-understanding">8. Explore the baseline and check your understanding</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mission_01.html">Exercise 1: design robot decision rules</a><ul>
@@ -308,15 +307,22 @@ not automatically copied into it.</p>
 <li class="toctree-l1"><a class="reference internal" href="mission_02.html">Exercise 2: investigate prompt-driven decisions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mission_02.html#what-changes-from-exercise-1">What changes from Exercise 1?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mission_02.html#information-and-allowed-actions">Information and allowed actions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mission_02.html#requirements-and-workflow">Requirements and workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mission_02.html#decision-sources-and-counters">Decision sources and counters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mission_02.html#request-behavior-and-current-defaults">Request behavior and current defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mission_02.html#failure-and-fallback-behavior">Failure and fallback behavior</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mission_02.html#start-offline">Start offline</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mission_02.html#run-the-live-experiment">Run the live experiment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mission_02.html#read-the-evidence">Read the evidence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mission_02.html#run-a-live-experiment">Run a live experiment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mission_02.html#use-the-solara-evidence">Use the Solara evidence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mission_02.html#read-the-saved-evidence">Read the saved evidence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mission_02.html#requirements-and-workflow">Requirements and workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mission_02.html#compare-separate-repositories">Compare separate repositories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mission_02.html#interpret-the-experiment">Interpret the experiment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mission_02.html#completion-checklist">Completion checklist</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mission_02.html#optional-openai-provider">Optional OpenAI provider</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="experiments.html">Compare strategies and explain results</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="experiments.html#run-the-supplied-comparison">Run the supplied comparison</a></li>
+<li class="toctree-l2"><a class="reference internal" href="experiments.html#run-a-comparison">Run a comparison</a></li>
 <li class="toctree-l2"><a class="reference internal" href="experiments.html#metrics-and-their-meaning">Metrics and their meaning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="experiments.html#build-a-fair-explanation">Build a fair explanation</a></li>
 </ul>
@@ -330,12 +336,12 @@ not automatically copied into it.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="installation.html">
+          <a class="next-page" href="mars_colony_setup.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Set up and run the practical</div>
+                <div class="title">Mars Colony setup</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>

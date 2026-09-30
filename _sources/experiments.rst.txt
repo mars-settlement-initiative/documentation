@@ -1,40 +1,29 @@
 Compare strategies and explain results
 ======================================
 
-Use the same world, seeds and step limit for each strategy. Keep Folder 1
+Use the same world, seeds and step limit for each strategy. Keep mars-colony-foundation
 unchanged. Save each code or prompt version alongside its results. Do not use
 a single successful run as evidence that a policy is generally better.
 
-Run the supplied comparison
----------------------------
+Run a comparison
+----------------
 
-From the student project root:
+From each project folder:
 
 .. code-block:: powershell
 
-   ./.venv/Scripts/python.exe mars_colony_3/analysis.py --mode mock
+   ./.venv/Scripts/python.exe mars-colony-foundation/analysis.py
+   ./.venv/Scripts/python.exe mars-colony-robot-decisions/analysis.py
+   ./.venv/Scripts/python.exe mars_colony_llm/analysis.py
 
 This runs the current code in all three folders using seeds 10, 20, 30, 40 and
 50 with a maximum of 500 ticks. The seeds represent different initial worlds
-under the same configuration, not five different rule sets. Folder 2 edits
-are included; Folder 3 uses offline rules in this command.
+under the same configuration, not five different rule sets.
 
-For a live comparison after configuring credentials:
 
-.. code-block:: powershell
 
-   ./.venv/Scripts/python.exe mars_colony_3/analysis.py --mode gemini --max-calls 20
-
-The live call ceiling applies per run, not to the entire five-seed benchmark.
-The script checks matching world settings and uses separate processes to avoid
-mixing the folders' identically named modules. Results are saved in a new
-benchmark directory under ``mars_colony_3/results``.
-
-Read ``benchmark.csv`` or ``benchmark.json`` for individual runs,
-``summary.json`` for means and sample standard deviations, and
-``paired_differences.json`` for each strategy minus Folder 1 on the same seed.
-The latter does not directly calculate revised-prompt minus original-prompt
-differences: compare your saved prompt runs seed by seed as well.
+Read ``benchmark.csv``  for individual runs and
+``summary.csv`` for means and sample standard deviations.
 
 Metrics and their meaning
 -------------------------
@@ -105,5 +94,4 @@ Explain **individual decision → interaction pattern → system outcome** using
 a trace and the aggregate results. Distinguish observations from explanations:
 if survival improved, identify evidence for the mechanism you propose. Discuss
 one seed where the change failed or helped less, and one competing explanation.
-For Exercise 2, include decision sources and fallback counts. If Exercise 1
-changed explorers, the Folder 2/3 comparison also includes that difference.
+For Exercise 2, include decision sources and fallback counts.

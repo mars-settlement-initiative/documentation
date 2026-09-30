@@ -1,0 +1,144 @@
+# Prompt tips
+
+### 1. Balanced strategy — recommended
+
+```text
+Choose actions using this priority order:
+
+1. If no COLLECT action is available, choose RETURN_BASE when away from base;
+   otherwise choose WAIT.
+2. For every known deposit, calculate:
+   - distance_to_target = Manhattan distance from position to deposit
+   - distance_target_to_base = Manhattan distance from deposit to base
+   - required_energy = distance_to_target + distance_target_to_base + 3
+3. Ignore deposits whose required_energy exceeds the collector's energy.
+4. Prefer deposits that are not listed in other_collector_intentions.
+5. Among the remaining deposits, choose the one with the smallest
+   distance_to_target + distance_target_to_base.
+6. Keep current_target when it remains safe and is not targeted by another
+   collector. Avoid changing targets without a clear benefit.
+7. If no safe deposit exists, choose RETURN_BASE.
+8. Choose WAIT only when neither safe collection nor returning is useful.
+
+The main objective is to deliver as many resources as possible. Secondary
+objectives are keeping collectors operational, reducing unnecessary movement,
+and avoiding duplicate targets.
+```
+
+This should provide a reasonable balance between delivered resources, robot survival, distance, and duplicate targets.
+
+### 2. Coordination-focused strategy
+
+Use this if `duplicate_target_steps` is high:
+
+```text
+Coordinate strictly with the other collectors.
+
+1. Treat every target in other_collector_intentions as assigned to another
+   collector.
+2. Prefer an unassigned known deposit that can be reached and followed by a
+   safe return to base.
+3. Required energy is:
+   Manhattan(position, deposit) + Manhattan(deposit, base_position) + 3.
+4. Among safe unassigned deposits, choose the one with the smallest total
+   journey distance.
+5. Continue current_target if it remains safe and no other collector targets it.
+6. Select an already assigned deposit only when every safe known deposit is
+   assigned. In that case, choose the nearest safe option.
+7. If no safe deposit exists, choose RETURN_BASE.
+8. Use WAIT only when no deposit is known and the collector is already at base.
+
+Prioritize low duplicate targeting, successful delivery, and robot survival.
+```
+
+This should reduce duplication, though strict avoidance may sometimes leave a collector travelling farther than necessary.
+
+### 3. Resource-throughput strategy
+
+Use this to maximize delivered resources and reduce idle time:
+
+```text
+Act aggressively while preserving enough energy to return.
+
+1. Never choose WAIT when a safe COLLECT action exists.
+2. For each deposit, calculate the complete journey cost:
+   Manhattan(position, deposit) + Manhattan(deposit, base_position).
+3. A deposit is safe when energy is at least complete journey cost + 2.
+4. Prefer an untargeted safe deposit.
+5. Among safe deposits, choose the one closest to the collector.
+6. Keep moving toward current_target while it remains known and safe.
+7. If every deposit is targeted, still choose the nearest safe deposit rather
+   than waiting.
+8. If no deposit is safe, choose RETURN_BASE.
+
+Maximize resources delivered before the colony runs out. Avoid waiting and
+unnecessary target changes.
+```
+
+This may improve collection but could increase duplicate targeting and risk because it uses a smaller energy margin.
+
+### 4. Robot-safety strategy
+
+Use this if collectors are failing from low energy:
+
+```text
+Protect collector energy before optimizing collection.
+
+1. Calculate the Manhattan distance from the collector to base.
+2. Return immediately when energy is less than distance_to_base + 10.
+3. Consider a deposit only when:
+   energy >= Manhattan(position, deposit)
+             + Manhattan(deposit, base_position)
+             + 10.
+4. Prefer deposits not targeted by another collector.
+5. Among safe deposits, choose the one with the shortest complete journey.
+6. Continue current_target only while it satisfies the same safety condition.
+7. If there is no safe deposit, choose RETURN_BASE.
+8. Choose WAIT only at base when no safe deposit is known.
+
+Prioritize zero failed collectors, then delivered resources, then distance.
+```
+
+This should improve robot survival but may collect fewer resources because collectors return earlier.
+
+### 5. Explicit scoring strategy
+
+This gives the model a numerical comparison rule:
+
+```text
+Score each available COLLECT action.
+
+For a deposit:
+- outbound = Manhattan(position, deposit)
+- home = Manhattan(deposit, base_position)
+- duplicate = 1 if another collector targets the deposit, otherwise 0
+- switching = 1 if current_target exists and differs from the deposit,
+  otherwise 0
+- safety_margin = energy - outbound - home
+
+Reject a deposit when safety_margin < 3.
+
+For every remaining deposit calculate:
+
+score = outbound + home + 12 * duplicate + 4 * switching
+
+Choose the COLLECT action with the lowest score.
+If scores tie, choose the lexicographically smallest action name.
+If no deposit passes the safety test, choose RETURN_BASE.
+Choose WAIT only when at base and no safe COLLECT action exists.
+
+Optimize delivered resources while avoiding duplicate assignments and
+unnecessary target switching.
+```
+
+This is especially useful experimentally because its behavior is more reproducible and each decision can be explained from the observation.
+
+For a fair comparison, test each prompt with the same model, seeds, maximum steps, API-call budget, and decision interval. Compare:
+
+- `resources_collected`: higher is better.
+- `steps_survived`: higher is better.
+- `failed_robots`: lower is better.
+- `idle_collector_steps`: generally lower is better.
+- `duplicate_target_steps`: generally lower is better.
+- `distance_travelled`: interpret together with resources delivered; less distance is only useful if performance remains good.
+

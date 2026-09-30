@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Compare strategies and explain results" href="experiments.html"><link rel="prev" title="Exercise 1: design robot decision rules" href="mission_01.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Compare strategies and explain results" href="experiments.html"><link rel="prev" title="Exercise 2: investigate prompt-driven decisions" href="mission_02.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>Exercise 2: investigate prompt-driven decisions - MESA Tutorial 0.1 documentation</title>
@@ -197,6 +197,7 @@
 <li class="toctree-l1"><a class="reference internal" href="mars_colony_setup.html">Mars Colony setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mesa_mars_colony_guide.html">Introduction to Mesa and the Mars colony</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mission_01.html">Exercise 1: design robot decision rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mission_02.html">Exercise 2: investigate prompt-driven decisions</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Exercise 2: investigate prompt-driven decisions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="experiments.html">Compare strategies and explain results</a></li>
 </ul>
@@ -219,7 +220,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="_sources/mission_02.rst.txt" title="View this page">
+  <a class="muted-link" href="_sources/mission_02b.rst.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -239,7 +240,7 @@
         <article role="main" id="furo-main-content">
           <section id="exercise-2-investigate-prompt-driven-decisions">
 <h1>Exercise 2: investigate prompt-driven decisions<a class="headerlink" href="#exercise-2-investigate-prompt-driven-decisions" title="Link to this heading">¶</a></h1>
-<p><strong>Working folder:</strong> <code class="docutils literal notranslate"><span class="pre">mars_colony_llm</span></code>. <strong>Edit:</strong> only the strategy section below
+<p><strong>Working folder:</strong> <code class="docutils literal notranslate"><span class="pre">mars_colony_3</span></code>. <strong>Edit:</strong> only the strategy section below
 <code class="docutils literal notranslate"><span class="pre">CHALLENGE</span> <span class="pre">2:</span> <span class="pre">STUDENTS</span> <span class="pre">MAY</span> <span class="pre">EDIT</span> <span class="pre">THE</span> <span class="pre">STRATEGY</span> <span class="pre">BELOW</span></code> in <code class="docutils literal notranslate"><span class="pre">prompt.txt</span></code>.
 Investigate whether a prompt produces useful collector decisions and how those
 decisions affect interactions and colony survival.</p>
@@ -296,9 +297,9 @@ progress and save matched-seed comparisons.</p></td>
 </div>
 <p>This is a hybrid agent. An LLM can guide eligible collector choices, while
 fixed rules handle forced actions and the simulation mechanics. It does not
-control the whole colony or rewrite Python. mars-colony-robot-decisions changes are not
-inherited by mars-colony-llm; the comparison tool nevertheless runs the actual code in
-each project. Disclose any mars-colony-robot-decisions explorer changes when interpreting results.</p>
+control the whole colony or rewrite Python. Folder 2 student changes are not
+inherited by Folder 3; the comparison tool nevertheless runs the actual code in
+each folder. Disclose any Folder 2 explorer changes when interpreting results.</p>
 </section>
 <section id="information-and-allowed-actions">
 <h2>Information and allowed actions<a class="headerlink" href="#information-and-allowed-actions" title="Link to this heading">¶</a></h2>
@@ -418,9 +419,9 @@ LLM fallback: Gemini API key was rejected. Further API calls are disabled for th
 </section>
 <section id="start-offline">
 <h2>Start offline<a class="headerlink" href="#start-offline" title="Link to this heading">¶</a></h2>
-<p>From the project root:</p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">run</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-batch</span> <span class="p">-</span><span class="n">-mode</span> <span class="n">mock</span> <span class="p">-</span><span class="n">-seed</span> <span class="n">42</span>
-<span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">run</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-mode</span> <span class="n">mock</span> <span class="p">-</span><span class="n">-port</span> <span class="n">8767</span>
+<p>From the student project root:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">mars_colony_3</span><span class="p">/</span><span class="n">run</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-batch</span> <span class="p">-</span><span class="n">-mode</span> <span class="n">mock</span> <span class="p">-</span><span class="n">-seed</span> <span class="n">42</span>
+<span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">mars_colony_3</span><span class="p">/</span><span class="n">run</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-mode</span> <span class="n">mock</span> <span class="p">-</span><span class="n">-port</span> <span class="n">8767</span>
 </pre></div>
 </div>
 <p>Mock mode demonstrates the observation/action interface and logging without
@@ -430,19 +431,19 @@ hypothesis and label offline results clearly.</p>
 </section>
 <section id="run-a-live-experiment">
 <h2>Run a live experiment<a class="headerlink" href="#run-a-live-experiment" title="Link to this heading">¶</a></h2>
-<p>Use the course-provided setup instructions in <code class="docutils literal notranslate"><span class="pre">mars_colony_llm/README.md</span></code>. The
+<p>Use the course-provided setup instructions in <code class="docutils literal notranslate"><span class="pre">mars_colony_3/README.md</span></code>. The
 launcher requests a key without writing it to the project:</p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">./</span><span class="n">mars_colony_llm</span><span class="p">/</span><span class="n">gemini_setup</span><span class="p">.</span><span class="n">ps1</span>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">./</span><span class="n">mars_colony_3</span><span class="p">/</span><span class="n">gemini_setup</span><span class="p">.</span><span class="n">ps1</span>
 </pre></div>
 </div>
 <p>For a terminal experiment, set the key for that terminal and run a short trace:</p>
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$env:GEMINI_API_KEY</span> <span class="p">=</span> <span class="no">[System.Net.NetworkCredential]</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="s1">''</span><span class="p">,</span> <span class="p">(</span><span class="nb">Read-Host</span> <span class="s1">'Gemini API key'</span> <span class="n">-AsSecureString</span><span class="p">)).</span><span class="n">Password</span>
-<span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">run</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-batch</span> <span class="p">-</span><span class="n">-mode</span> <span class="n">gemini</span> <span class="p">-</span><span class="n">-seed</span> <span class="n">42</span> <span class="p">-</span><span class="n">-steps</span> <span class="n">50</span> <span class="p">-</span><span class="n">-max-calls</span> <span class="n">10</span> <span class="p">-</span><span class="n">-request-seconds</span> <span class="n">1</span>
+<span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">mars_colony_3</span><span class="p">/</span><span class="n">run</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-batch</span> <span class="p">-</span><span class="n">-mode</span> <span class="n">gemini</span> <span class="p">-</span><span class="n">-seed</span> <span class="n">42</span> <span class="p">-</span><span class="n">-steps</span> <span class="n">50</span> <span class="p">-</span><span class="n">-max-calls</span> <span class="n">10</span> <span class="p">-</span><span class="n">-request-seconds</span> <span class="n">1</span>
 </pre></div>
 </div>
 <p>or in Command Prompt (CMD)</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="nv">GEMINI_API_KEY</span><span class="o">=</span>your-api-key
-./.venv/Scripts/python.exe<span class="w"> </span>run.py<span class="w"> </span>--batch<span class="w"> </span>--mode<span class="w"> </span>gemini<span class="w"> </span>--seed<span class="w"> </span><span class="m">42</span><span class="w"> </span>--steps<span class="w"> </span><span class="m">50</span><span class="w"> </span>--max-calls<span class="w"> </span><span class="m">10</span><span class="w"> </span>--request-seconds<span class="w"> </span><span class="m">1</span>
+./.venv/Scripts/python.exe<span class="w"> </span>mars_colony_3/run.py<span class="w"> </span>--batch<span class="w"> </span>--mode<span class="w"> </span>gemini<span class="w"> </span>--seed<span class="w"> </span><span class="m">42</span><span class="w"> </span>--steps<span class="w"> </span><span class="m">50</span><span class="w"> </span>--max-calls<span class="w"> </span><span class="m">10</span><span class="w"> </span>--request-seconds<span class="w"> </span><span class="m">1</span>
 </pre></div>
 </div>
 <p>An api key can be obtained at <a class="reference external" href="https://aistudio.google.com/api-keys">https://aistudio.google.com/api-keys</a></p>
@@ -450,12 +451,12 @@ launcher requests a key without writing it to the project:</p>
 quotas are provider settings; the code cannot select or verify an account tier.
 The short run above is for inspecting decisions, not the full benchmark.</p>
 <p>For the interactive dashboard with the same explicit pacing:</p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">run</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-mode</span> <span class="n">gemini</span> <span class="p">-</span><span class="n">-port</span> <span class="n">8767</span> <span class="p">-</span><span class="n">-request-seconds</span> <span class="n">1</span>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">mars_colony_3</span><span class="p">/</span><span class="n">run</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-mode</span> <span class="n">gemini</span> <span class="p">-</span><span class="n">-port</span> <span class="n">8767</span> <span class="p">-</span><span class="n">-request-seconds</span> <span class="n">1</span>
 </pre></div>
 </div>
 <p>To remove deliberate pacing and wait only for each real API response, use
 <code class="docutils literal notranslate"><span class="pre">--request-seconds</span> <span class="pre">0</span></code>:</p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">run</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-batch</span> <span class="p">-</span><span class="n">-mode</span> <span class="n">gemini</span> <span class="p">-</span><span class="n">-seed</span> <span class="n">42</span> <span class="p">-</span><span class="n">-steps</span> <span class="n">50</span> <span class="p">-</span><span class="n">-max-calls</span> <span class="n">10</span> <span class="p">-</span><span class="n">-request-seconds</span> <span class="n">0</span>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">mars_colony_3</span><span class="p">/</span><span class="n">run</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-batch</span> <span class="p">-</span><span class="n">-mode</span> <span class="n">gemini</span> <span class="p">-</span><span class="n">-seed</span> <span class="n">42</span> <span class="p">-</span><span class="n">-steps</span> <span class="n">50</span> <span class="p">-</span><span class="n">-max-calls</span> <span class="n">10</span> <span class="p">-</span><span class="n">-request-seconds</span> <span class="n">0</span>
 </pre></div>
 </div>
 <p>Zero spacing is faster but may encounter provider rate limits. Changing request
@@ -476,13 +477,13 @@ decision.</p>
 <p>Interactive decisions are appended immediately to the timestamped CSV path
 printed by the launcher and displayed in the panel. The path normally has this
 form:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>results/&lt;timestamp&gt;/decisions.csv
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>mars_colony_3/results/&lt;timestamp&gt;/decisions.csv
 </pre></div>
 </div>
 </section>
 <section id="read-the-saved-evidence">
 <h2>Read the saved evidence<a class="headerlink" href="#read-the-saved-evidence" title="Link to this heading">¶</a></h2>
-<p>Batch runs create a timestamped directory under <code class="docutils literal notranslate"><span class="pre">results</span></code>:</p>
+<p>Batch runs create a timestamped directory under <code class="docutils literal notranslate"><span class="pre">mars_colony_3/results</span></code>:</p>
 <div class="table-wrapper docutils container" id="id3">
 <table class="docutils align-default" id="id3">
 <caption><span class="caption-text">Batch artifacts</span><a class="headerlink" href="#id3" title="Link to this table">¶</a></caption>
@@ -536,7 +537,18 @@ pattern and colony-level outcome.</p></li>
 <section id="compare-separate-repositories">
 <h2>Compare separate repositories<a class="headerlink" href="#compare-separate-repositories" title="Link to this heading">¶</a></h2>
 <p>Each exercise repository contains a self-contained <code class="docutils literal notranslate"><span class="pre">analysis.py</span></code>. Run it
-inside that repository</p>
+inside that repository; the other repositories do not need to be installed or
+present. Give each implementation a clear label:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="c"># Run in the Folder 1 repository</span>
+<span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">analysis</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-label</span> <span class="n">folder_1_baseline</span>
+
+<span class="c"># Run in the Folder 2 repository</span>
+<span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">analysis</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-label</span> <span class="n">folder_2_student_rules</span>
+
+<span class="c"># Run in the Folder 3 repository</span>
+<span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">analysis</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-mode</span> <span class="n">gemini</span> <span class="p">-</span><span class="n">-max-calls</span> <span class="n">120</span> <span class="p">-</span><span class="n">-request-seconds</span> <span class="n">1</span> <span class="p">-</span><span class="n">-label</span> <span class="n">folder_3_prompt</span>
+</pre></div>
+</div>
 <p>All three scripts evaluate seeds 10, 20, 30, 40 and 50 for up to 500 ticks by
 default. They print the same outcome table and write <code class="docutils literal notranslate"><span class="pre">benchmark.csv</span></code> with the
 same columns. Download or copy the three CSV files and append their rows in
@@ -544,26 +556,26 @@ Excel, LibreOffice Calc or Google Sheets. The <code class="docutils literal notr
 the rows identifiable after they are combined. <code class="docutils literal notranslate"><span class="pre">summary.csv</span></code> uses the same
 four-column format in every repository: implementation, metric, mean and sample
 standard deviation.</p>
-<p>Live benchmarks print every mars_colony_llm API request as it starts. They also print
+<p>Live benchmarks print every Folder 3 API request as it starts. They also print
 the maximum delay implied by request spacing. At 120 calls and one-second
 spacing, pacing adds at most about 2 minutes per seed, plus provider response
 time. A quick pipeline check is:</p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">analysis</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-mode</span> <span class="n">mock</span> <span class="p">-</span><span class="n">-seeds</span> <span class="n">10</span> <span class="p">-</span><span class="n">-steps</span> <span class="n">50</span> <span class="p">-</span><span class="n">-max-calls</span> <span class="n">10</span> <span class="p">-</span><span class="n">-label</span> <span class="n">mars_colony_llm_mock</span>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">analysis</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-mode</span> <span class="n">mock</span> <span class="p">-</span><span class="n">-seeds</span> <span class="n">10</span> <span class="p">-</span><span class="n">-steps</span> <span class="n">50</span> <span class="p">-</span><span class="n">-max-calls</span> <span class="n">10</span> <span class="p">-</span><span class="n">-label</span> <span class="n">folder_3_mock</span>
 </pre></div>
 </div>
 <p>For a small live pilot:</p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">analysis</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-mode</span> <span class="n">gemini</span> <span class="p">-</span><span class="n">-seeds</span> <span class="n">10</span> <span class="p">-</span><span class="n">-steps</span> <span class="n">50</span> <span class="p">-</span><span class="n">-max-calls</span> <span class="n">10</span> <span class="p">-</span><span class="n">-request-seconds</span> <span class="n">1</span> <span class="p">-</span><span class="n">-label</span> <span class="n">mars_colony_llm_prompt</span>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">analysis</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-mode</span> <span class="n">gemini</span> <span class="p">-</span><span class="n">-seeds</span> <span class="n">10</span> <span class="p">-</span><span class="n">-steps</span> <span class="n">50</span> <span class="p">-</span><span class="n">-max-calls</span> <span class="n">10</span> <span class="p">-</span><span class="n">-request-seconds</span> <span class="n">1</span> <span class="p">-</span><span class="n">-label</span> <span class="n">folder_3_prompt</span>
 </pre></div>
 </div>
 <p>For the fastest benchmark, remove the deliberate delay:</p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">analysis</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-mode</span> <span class="n">gemini</span> <span class="p">-</span><span class="n">-request-seconds</span> <span class="n">0</span> <span class="p">-</span><span class="n">-label</span> <span class="n">mars-colony-llm_prompt</span>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">analysis</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-mode</span> <span class="n">gemini</span> <span class="p">-</span><span class="n">-request-seconds</span> <span class="n">0</span> <span class="p">-</span><span class="n">-label</span> <span class="n">folder_3_prompt</span>
 </pre></div>
 </div>
 <p>Reducing <code class="docutils literal notranslate"><span class="pre">--max-calls</span></code> can shorten a run further, but after that ceiling the
 fallback policy controls new decisions. This changes how much of the experiment
 is LLM-driven. Reducing only <code class="docutils literal notranslate"><span class="pre">--request-seconds</span></code> preserves the call budget and
 decision cadence unless rate limiting causes provider failures.</p>
-<p>mars-colony-foundation and mars-colony-robot-decisions write <code class="docutils literal notranslate"><span class="pre">benchmark.csv</span></code> and <code class="docutils literal notranslate"><span class="pre">summary.csv</span></code>. mars-colony-llm also
+<p>Folder 1 and Folder 2 write <code class="docutils literal notranslate"><span class="pre">benchmark.csv</span></code> and <code class="docutils literal notranslate"><span class="pre">summary.csv</span></code>. Folder 3 also
 writes <code class="docutils literal notranslate"><span class="pre">benchmark.json</span></code>, the actual prompt, and per-seed JSONL and CSV decision
 logs. Calculate paired differences after combining the exported tables by
 matching rows on <code class="docutils literal notranslate"><span class="pre">seed</span></code>; do not compare unrelated seeds.</p>
@@ -591,7 +603,7 @@ from recorded decisions and repeated comparisons.</p>
 <h2>Completion checklist<a class="headerlink" href="#completion-checklist" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Original and revised strategy prompts, with a hypothesis and explanation.</p></li>
-<li><p>Results for matched seeds, including mars-colony-foundation and the actual mars-colony-robot-decisions rules.</p></li>
+<li><p>Results for matched seeds, including Folder 1 and the actual Folder 2 rules.</p></li>
 <li><p>Provider/model, cadence, pacing, call limit, API attempts, valid LLM choices,
 continued choices and fallback counts.</p></li>
 <li><p>One traced observation -&gt; API reply/source -&gt; action -&gt; interaction -&gt; colony
@@ -624,14 +636,14 @@ fixed across prompt variants.</p>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="mission_01.html">
+          <a class="prev-page" href="mission_02.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Exercise 1: design robot decision rules</div>
+                <div class="title">Exercise 2: investigate prompt-driven decisions</div>
                 
               </div>
             </a>

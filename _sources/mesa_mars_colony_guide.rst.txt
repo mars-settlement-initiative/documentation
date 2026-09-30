@@ -1,0 +1,328 @@
+Introduction to Mesa and the Mars colony
+========================================
+
+**Folder:** ``mars_colony``. **Task:** read, run and explain the supplied code.
+No implementation is required in this introductory phase, even where a file
+contains a ``STUDENT MODIFICATION AREA`` marker. Coding begins in
+:doc:`mission_01`.
+
+Mesa provides the simulation framework; you define what each agent knows and
+how it decides and acts. A multi-agent system (MAS) consists of interacting
+agents whose actions affect a shared environment. In this practical, explorers
+and collectors have different roles, but both contribute to supplying the
+colony's base.
+
+.. note::
+
+   For further reading, consult the `Mesa documentation
+   <https://mesa.readthedocs.io/latest/index.html>`_. Or you can `download the pdf
+   <https://app.readthedocs.org/projects/mesa/downloads/pdf/latest>`_.
+
+
+
+1. Find your way around the code
+--------------------------------
+
+Read the files in this order:
+
+#. ``config.py``: dimensions, populations, energy and experiment settings.
+#. ``model.py``: initialization, grid placement, activation and data collection.
+#. ``agents.py``: shared mechanics and explorer/collector decision policies.
+#. ``run.py`` and ``app.py``: execution and visualization.
+#. ``analysis.py``: a single experiment exporting ``mars_results.csv``.
+   See :doc:`experiments` for the three-folder comparison.
+
+The key concepts have corresponding objects in the Mars code:
+
+.. list-table:: Mesa concepts in the practical
+   :header-rows: 1
+   :widths: 18 43 39
+
+   * - Concept
+     - Mars code
+     - Responsibility
+   * - Agent
+     - ``mesa.Agent``; ``RobotAgent``, ``ExplorerAgent``, ``CollectorAgent``
+       and ``ResourceAgent``
+     - Individual state and behaviour; resource deposits are also agents.
+   * - Model
+     - ``MarsColonyModel(mesa.Model)``
+     - Creates agents and applies colony-wide rules.
+   * - Environment
+     - ``MultiGrid``, deposits, base and shared information
+     - Makes movement, discovery and interaction possible.
+   * - Activation
+     - ``self.agents.select(...)`` and ``shuffle_do("step")``
+     - Gives selected robots turns in a shuffled order.
+   * - Measurement
+     - ``DataCollector``
+     - Records model state for plots and analysis.
+
+
+2. Understand the shared world
+------------------------------
+
+The non-wrapping 20 by 20 grid contains a central base, two explorers, three
+collectors and 12 deposits of 20 units. The base starts with 100 units and
+consumes one per tick. Robots start with 100 energy; collectors can carry 10
+units. Locate these settings in ``config.py``.
+
+``ResourceAgent`` represents a stationary deposit. ``RobotAgent`` supplies
+movement, energy accounting and recharge. ``ExplorerAgent`` and
+``CollectorAgent`` inherit those shared mechanics but implement different
+decisions.
+
+
+3. Agents: registration, state and roles
+----------------------------------------
+
+In ``agents.py``, the two base agent classes are ``ResourceAgent`` and
+``RobotAgent``. Each calls ``super().__init__(model)`` to initialize the Mesa
+agent and register it with its model:
+
+.. code-block:: python
+
+   class ResourceAgent(mesa.Agent):
+       def __init__(self, model, amount=RESOURCE_AMOUNT):
+           super().__init__(model)
+           # Remaining initialization is omitted here.
+
+   class RobotAgent(mesa.Agent):
+       def __init__(self, model, energy=ROBOT_INITIAL_ENERGY):
+           super().__init__(model)
+           # Remaining initialization is omitted here.
+
+``ExplorerAgent`` and ``CollectorAgent`` inherit common functionality from
+``RobotAgent``.
+
+Individual agent attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A ``RobotAgent`` stores its maximum and current energy, whether it is active,
+and a distance counter:
+
+.. code-block:: python
+
+   self.max_energy = energy
+   self.energy = energy
+   self.active = True
+   self.distance_travelled = 0
+
+A ``CollectorAgent`` additionally stores its cargo, carrying capacity and
+current target:
+
+.. code-block:: python
+
+   self.cargo = 0
+   self.capacity = COLLECTOR_CAPACITY
+   self.target_resource = None
+
+A ``ResourceAgent`` stores how much material remains and whether the deposit
+has been discovered:
+
+.. code-block:: python
+
+   self.amount = amount
+   self.discovered = False
+
+These are *agent* attributes because they describe an individual robot or
+deposit, not the colony as a whole.
+
+
+4. Model: shared state and placement
+------------------------------------
+
+The model in ``model.py`` owns colony-wide state, including base supplies, the
+consumption rate and the set of discovered resource locations:
+
+.. code-block:: python
+
+   self.base_resources = initial_base_resources
+   self.consumption_rate = consumption_rate
+   self.known_resources = set()
+
+The model initializes Mesa with ``super().__init__(seed=seed)`` and uses
+``self.random`` for random decisions. Record the seed when you want to repeat
+a run.
+
+Registration is **not** the same as placement. The model places agents on its
+grid, for example:
+
+.. code-block:: python
+
+   self.grid.place_agent(resource, position)
+
+After placement, an agent's ``self.pos`` gives its grid position.
+
+Individual and shared information
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Robots hold their own energy and movement state; collectors additionally hold
+cargo and targets. The model holds ``base_resources`` and
+``known_resources``. Deposits hold their remaining ``amount`` and
+``discovered`` status.
+
+An agent can access its model through ``self.model``, but technical access to
+model objects is not permission for its decision policy to use all information.
+Explorers must discover deposits; collectors select from *known* locations.
+Keep that information boundary when designing behaviour rules.
+
+
+5. Environment: space and interaction
+-------------------------------------
+
+The practical uses ``mesa.space.MultiGrid`` with integer ``(x, y)``
+positions, ``place_agent``, ``move_agent`` and
+``get_cell_list_contents``. Multiple agents can occupy the same cell.
+``torus=False`` means movement does not wrap around at the grid boundaries.
+
+The robots' horizontal/vertical movement and energy costs come from the
+application's methods; ``MultiGrid`` does not impose them automatically.
+Other Mesa tutorials may use ``CellAgent`` and ``mesa.discrete_space``; those
+use a different spatial interface. Follow the ``MultiGrid`` interface in
+this practical.
+
+Explorers publish discovered positions to ``known_resources``. Collectors
+read the same shared information. This is closer to a shared information board
+than explicit message passing or negotiation. A target is an intention, **not**
+a reservation: two collectors can independently select the same deposit.
+
+
+6. Trace one simulation tick
+----------------------------
+
+An agent's ``step()`` is one local turn. In ``MarsColonyModel.step``, the model
+selects robot agents and activates them in shuffled order:
+
+.. code-block:: python
+
+   robots = self.agents.select(
+       lambda agent: isinstance(agent, RobotAgent)
+   )
+   robots.shuffle_do("step")
+
+Shuffling changes which robot acts first; activation is still **sequential**.
+For example, a collector acting later in the same tick could find that an
+earlier collector has emptied its target deposit. Resource agents are
+registered with Mesa but are excluded from this robot activation.
+
+After the robots act, the model subtracts base consumption, increments
+``steps_survived``, collects measurements and stops if supplies are depleted.
+It also records the initial state before any turns.
+
+Explorer decisions
+~~~~~~~~~~~~~~~~~~
+
+An explorer checks its current cell for a deposit and publishes newly found
+locations in ``known_resources``. Below 20 energy it returns toward base;
+otherwise, it moves randomly. It then checks for recharge.
+
+Collector decisions
+~~~~~~~~~~~~~~~~~~~
+
+A collector first collects at its existing target, unloads at base and checks
+for recharge. Its decision block then returns toward base below 25 energy,
+returns with cargo, or chooses and approaches the nearest known resource.
+A deposit reached through movement is collected on a **later** turn; cargo
+arriving at base is likewise unloaded on a **later** turn. Notice the
+separation between shared mechanics and agent-specific decisions.
+
+Details worth noticing
+~~~~~~~~~~~~~~~~~~~~~~
+
+* Targeted movement goes horizontally first, then vertically.
+
+.. code-block:: python
+
+    def move_one_step_towards(self, target):
+    ...
+        if current_x < target_x:
+            new_x += 1
+
+        elif current_x > target_x:
+            new_x -= 1
+
+        elif current_y < target_y:
+            new_y += 1
+
+        elif current_y > target_y:
+            new_y -= 1
+
+        new_position = (new_x, new_y)
+
+* The movement helper charges energy and increments its distance counter even
+  when called with the current position. Thus, the counter does not always
+  equal geometric displacement. Preserve this mechanic when comparing
+  exercises.
+* Inactive robots immediately return from ``step()``. Examine where recharge
+  is called: reaching zero energy does not guarantee later recovery.
+
+.. code-block:: python
+
+        if self.energy < EXPLORER_RETURN_THRESHOLD:
+
+            self.move_one_step_towards(
+                self.model.base_position
+            )
+
+        else:
+
+            self.random_move()
+
+        self.recharge_if_at_base()
+
+* Empty deposits are removed from both the grid and Mesa's agent registry;
+  partially collected deposits remain available.
+* A remembered target can become stale if another robot empties its deposit.
+
+
+7. Connect local decisions to colony outcomes
+---------------------------------------------
+
+Use the following explanation chain throughout the practical:
+
+**Individual decision → interaction pattern → colony outcome.**
+
+For example, two collectors may each reasonably choose the nearest known
+deposit, yet overlap in their journeys because targets are not reserved.
+Changing a target-selection rule might reduce overlapping journeys and alter
+delivery timing. Test this hypothesis: fewer overlaps alone do not prove
+longer survival, and one deposit may supply more than one load.
+
+``DataCollector`` records measurements used to examine such outcomes.
+Compare survival, deliveries and distance rather than concluding that a
+locally plausible rule necessarily improves the colony.
+
+
+8. Explore the baseline and check your understanding
+----------------------------------------------------
+
+Exploration checklist
+~~~~~~~~~~~~~~~~~~~~~
+
+#. Run seed 42 and record survival, deliveries and distance.
+#. Locate the lines that register an agent and place it on the grid.
+#. Follow an explorer from perception to publication of a resource location.
+#. Follow a collector through selection, travel, collection and unloading.
+#. Explain one interaction between robots using an observed example.
+#. Explain why a sensible local choice might produce a poor collective outcome.
+
+Check your understanding
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+#. Why is cargo agent state but base supplies model state?
+#. Why are resource deposits registered agents but excluded from robot
+   activation?
+#. How could activation order affect collectors approaching the same deposit?
+#. What information can a collector use, and what information is hidden from
+   its decision policy?
+#. Which features are provided by Mesa, and which are application-specific
+   rules?
+
+Bring your baseline report and explanation to Exercise 1. Keep the
+``mars_colony`` folder unchanged as the reference for subsequent experiments.
+
+For API details, consult Mesa's `Agent reference
+<https://mesa.readthedocs.io/stable/apis/agent.html>`_, `space reference
+<https://mesa.readthedocs.io/stable/apis/space.html>`_ and `DataCollector
+reference <https://mesa.readthedocs.io/stable/apis/datacollection.html>`_.

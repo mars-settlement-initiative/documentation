@@ -39,7 +39,7 @@ Exercises
    ./.venv/Scripts/python.exe mars_colony_3/run.py --mode mock --port 8767
    ./.venv/Scripts/python.exe mars_colony_3/run.py --batch --mode mock --seed 42
 
-Folder 3's ``mock`` mode requires no credentials and makes no LLM calls.
+mars-colony-llm 's ``mock`` mode requires no credentials and makes no LLM calls.
 Specify it explicitly: the supplied default is online Gemini mode. Follow
 :doc:`mission_02` for the prompt experiment.
 

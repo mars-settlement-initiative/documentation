@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Mesa concepts used in this practical" href="Introduction%20to%20Mesa.html"><link rel="prev" title="Mesa and multi-agent systems: Mars Colony" href="index.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>Set up and run the practical - MESA Tutorial 0.1 documentation</title>
@@ -193,10 +193,9 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Practical guide</span></p>
-<ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Set up and run the practical</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Introduction%20to%20Mesa.html">Mesa concepts used in this practical</a></li>
-<li class="toctree-l1"><a class="reference internal" href="agent.html">Introduction: explore mars_colony</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mars_colony_setup.html">Mars Colony setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mesa_mars_colony_guide.html">Introduction to Mesa and the Mars colony</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mission_01.html">Exercise 1: design robot decision rules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mission_02.html">Exercise 2: investigate prompt-driven decisions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="experiments.html">Compare strategies and explain results</a></li>
@@ -270,7 +269,7 @@ continuing in the same terminal. The second prints a terminal report.</p>
 <span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">mars_colony_3</span><span class="p">/</span><span class="n">run</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-batch</span> <span class="p">-</span><span class="n">-mode</span> <span class="n">mock</span> <span class="p">-</span><span class="n">-seed</span> <span class="n">42</span>
 </pre></div>
 </div>
-<p>Folder 3’s <code class="docutils literal notranslate"><span class="pre">mock</span></code> mode requires no credentials and makes no LLM calls.
+<p>mars-colony-llm ‘s <code class="docutils literal notranslate"><span class="pre">mock</span></code> mode requires no credentials and makes no LLM calls.
 Specify it explicitly: the supplied default is online Gemini mode. Follow
 <a class="reference internal" href="mission_02.html"><span class="doc">Exercise 2: investigate prompt-driven decisions</span></a> for the prompt experiment.</p>
 <p>If a package is missing, install requirements with the same Python executable
@@ -285,26 +284,8 @@ Run each folder through its own entry point: identically named modules such as
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="Introduction%20to%20Mesa.html">
-              <div class="page-info">
-                <div class="context">
-                  <span>Next</span>
-                </div>
-                <div class="title">Mesa concepts used in this practical</div>
-              </div>
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-            </a>
-          <a class="prev-page" href="index.html">
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-              <div class="page-info">
-                <div class="context">
-                  <span>Previous</span>
-                </div>
-                
-                <div class="title">Home</div>
-                
-              </div>
-            </a>
+          
+          
         </div>
         <div class="bottom-of-page">
           <div class="left-details">

@@ -194,9 +194,8 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Practical guide</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Set up and run the practical</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Introduction%20to%20Mesa.html">Mesa concepts used in this practical</a></li>
-<li class="toctree-l1"><a class="reference internal" href="agent.html">Introduction: explore mars_colony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mars_colony_setup.html">Mars Colony setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mesa_mars_colony_guide.html">Introduction to Mesa and the Mars colony</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mission_01.html">Exercise 1: design robot decision rules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mission_02.html">Exercise 2: investigate prompt-driven decisions</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Compare strategies and explain results</a></li>
@@ -240,32 +239,22 @@
         <article role="main" id="furo-main-content">
           <section id="compare-strategies-and-explain-results">
 <h1>Compare strategies and explain results<a class="headerlink" href="#compare-strategies-and-explain-results" title="Link to this heading">¶</a></h1>
-<p>Use the same world, seeds and step limit for each strategy. Keep Folder 1
+<p>Use the same world, seeds and step limit for each strategy. Keep mars-colony-foundation
 unchanged. Save each code or prompt version alongside its results. Do not use
 a single successful run as evidence that a policy is generally better.</p>
-<section id="run-the-supplied-comparison">
-<h2>Run the supplied comparison<a class="headerlink" href="#run-the-supplied-comparison" title="Link to this heading">¶</a></h2>
-<p>From the student project root:</p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">mars_colony_3</span><span class="p">/</span><span class="n">analysis</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-mode</span> <span class="n">mock</span>
+<section id="run-a-comparison">
+<h2>Run a comparison<a class="headerlink" href="#run-a-comparison" title="Link to this heading">¶</a></h2>
+<p>From each project folder:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">mars-colony-foundation</span><span class="p">/</span><span class="n">analysis</span><span class="p">.</span><span class="n">py</span>
+<span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">mars-colony-robot-decisions</span><span class="p">/</span><span class="n">analysis</span><span class="p">.</span><span class="n">py</span>
+<span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">mars_colony_llm</span><span class="p">/</span><span class="n">analysis</span><span class="p">.</span><span class="n">py</span>
 </pre></div>
 </div>
 <p>This runs the current code in all three folders using seeds 10, 20, 30, 40 and
 50 with a maximum of 500 ticks. The seeds represent different initial worlds
-under the same configuration, not five different rule sets. Folder 2 edits
-are included; Folder 3 uses offline rules in this command.</p>
-<p>For a live comparison after configuring credentials:</p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">./.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">mars_colony_3</span><span class="p">/</span><span class="n">analysis</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-mode</span> <span class="n">gemini</span> <span class="p">-</span><span class="n">-max-calls</span> <span class="n">20</span>
-</pre></div>
-</div>
-<p>The live call ceiling applies per run, not to the entire five-seed benchmark.
-The script checks matching world settings and uses separate processes to avoid
-mixing the folders’ identically named modules. Results are saved in a new
-benchmark directory under <code class="docutils literal notranslate"><span class="pre">mars_colony_3/results</span></code>.</p>
-<p>Read <code class="docutils literal notranslate"><span class="pre">benchmark.csv</span></code> or <code class="docutils literal notranslate"><span class="pre">benchmark.json</span></code> for individual runs,
-<code class="docutils literal notranslate"><span class="pre">summary.json</span></code> for means and sample standard deviations, and
-<code class="docutils literal notranslate"><span class="pre">paired_differences.json</span></code> for each strategy minus Folder 1 on the same seed.
-The latter does not directly calculate revised-prompt minus original-prompt
-differences: compare your saved prompt runs seed by seed as well.</p>
+under the same configuration, not five different rule sets.</p>
+<p>Read <code class="docutils literal notranslate"><span class="pre">benchmark.csv</span></code>  for individual runs and
+<code class="docutils literal notranslate"><span class="pre">summary.csv</span></code> for means and sample standard deviations.</p>
 </section>
 <section id="metrics-and-their-meaning">
 <h2>Metrics and their meaning<a class="headerlink" href="#metrics-and-their-meaning" title="Link to this heading">¶</a></h2>
@@ -351,8 +340,7 @@ spread; repeat live runs when assessing that additional variability.</p>
 a trace and the aggregate results. Distinguish observations from explanations:
 if survival improved, identify evidence for the mechanism you propose. Discuss
 one seed where the change failed or helped less, and one competing explanation.
-For Exercise 2, include decision sources and fallback counts. If Exercise 1
-changed explorers, the Folder 2/3 comparison also includes that difference.</p>
+For Exercise 2, include decision sources and fallback counts.</p>
 </section>
 </section>
 
@@ -404,7 +392,7 @@ changed explorers, the Folder 2/3 comparison also includes that difference.</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Compare strategies and explain results</a><ul>
-<li><a class="reference internal" href="#run-the-supplied-comparison">Run the supplied comparison</a></li>
+<li><a class="reference internal" href="#run-a-comparison">Run a comparison</a></li>
 <li><a class="reference internal" href="#metrics-and-their-meaning">Metrics and their meaning</a></li>
 <li><a class="reference internal" href="#build-a-fair-explanation">Build a fair explanation</a></li>
 </ul>

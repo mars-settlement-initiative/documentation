@@ -4,34 +4,42 @@ Mesa and multi-agent systems: Mars Colony
 Explore a working Mesa simulation, then investigate how individual robot
 decisions affect the colony through two exercises.
 
+
+.. image:: assets/mission-01-baseline.gif
+   :scale: 90 %
+   :alt: alternate text
+   :align: right
+
+
+
+
 .. list-table:: Your learning route
    :header-rows: 1
 
    * - Folder
      - Task
      - Evidence of learning
-   * - ``mars_colony``
+   * - ``mars-colony-foundation``
      - Introduction: explore the code. No coding required.
      - Explain a simulation tick and record baseline observations.
-   * - ``mars_colony_2``
+   * - ``mars-colony-robot-decisions``
      - Exercise 1: change Python decisions in ``agents.py``.
      - Explain and evaluate your rule changes.
-   * - ``mars_colony_3``
+   * - ``mars-colony-llm``
      - Exercise 2: edit the strategy in ``prompt.txt``.
      - Evaluate prompt-driven collector choices using results and logs.
 
-**Folder numbers are not exercise numbers.** Keep Folder 1 unchanged as your
-reference. Folder 2 starts with equivalent baseline behaviour. Folder 3 adds
-a collector decision interface to the same world; your Folder 2 edits are
+Keep mars-colony-foundation unchanged as your
+reference. mars-colony-robot-decisions starts with equivalent baseline behaviour. mars-colony-llm adds
+a collector decision interface to the same world; your mars-colony-robot-decisions edits are
 not automatically copied into it.
 
 .. toctree::
    :maxdepth: 2
    :caption: Practical guide
 
-   installation
-   Introduction to Mesa
-   agent
+   mars_colony_setup
+   mesa_mars_colony_guide
    mission_01
    mission_02
    experiments

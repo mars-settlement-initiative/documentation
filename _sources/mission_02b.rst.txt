@@ -1,7 +1,7 @@
 Exercise 2: investigate prompt-driven decisions
 ================================================
 
-**Working folder:** ``mars_colony_llm``. **Edit:** only the strategy section below
+**Working folder:** ``mars_colony_3``. **Edit:** only the strategy section below
 ``CHALLENGE 2: STUDENTS MAY EDIT THE STRATEGY BELOW`` in ``prompt.txt``.
 Investigate whether a prompt produces useful collector decisions and how those
 decisions affect interactions and colony survival.
@@ -50,9 +50,9 @@ The supplied implementation adds the following components for you to read:
 
 This is a hybrid agent. An LLM can guide eligible collector choices, while
 fixed rules handle forced actions and the simulation mechanics. It does not
-control the whole colony or rewrite Python. mars-colony-robot-decisions changes are not
-inherited by mars-colony-llm; the comparison tool nevertheless runs the actual code in
-each project. Disclose any mars-colony-robot-decisions explorer changes when interpreting results.
+control the whole colony or rewrite Python. Folder 2 student changes are not
+inherited by Folder 3; the comparison tool nevertheless runs the actual code in
+each folder. Disclose any Folder 2 explorer changes when interpreting results.
 
 Information and allowed actions
 -------------------------------
@@ -176,12 +176,12 @@ The terminal states whether future calls remain enabled:
 Start offline
 -------------
 
-From the project root:
+From the student project root:
 
 .. code-block:: powershell
 
-   ./.venv/Scripts/python.exe run.py --batch --mode mock --seed 42
-   ./.venv/Scripts/python.exe run.py --mode mock --port 8767
+   ./.venv/Scripts/python.exe mars_colony_3/run.py --batch --mode mock --seed 42
+   ./.venv/Scripts/python.exe mars_colony_3/run.py --mode mock --port 8767
 
 Mock mode demonstrates the observation/action interface and logging without
 credentials. It uses coded rules, not an LLM. Editing the prompt cannot affect a
@@ -191,26 +191,26 @@ hypothesis and label offline results clearly.
 Run a live experiment
 ---------------------
 
-Use the course-provided setup instructions in ``mars_colony_llm/README.md``. The
+Use the course-provided setup instructions in ``mars_colony_3/README.md``. The
 launcher requests a key without writing it to the project:
 
 .. code-block:: powershell
 
-   ./mars_colony_llm/gemini_setup.ps1
+   ./mars_colony_3/gemini_setup.ps1
 
 For a terminal experiment, set the key for that terminal and run a short trace:
 
 .. code-block:: powershell
 
    $env:GEMINI_API_KEY = [System.Net.NetworkCredential]::new('', (Read-Host 'Gemini API key' -AsSecureString)).Password
-   ./.venv/Scripts/python.exe run.py --batch --mode gemini --seed 42 --steps 50 --max-calls 10 --request-seconds 1
+   ./.venv/Scripts/python.exe mars_colony_3/run.py --batch --mode gemini --seed 42 --steps 50 --max-calls 10 --request-seconds 1
 
 or in Command Prompt (CMD)
 
 .. code-block:: bash
 
     set GEMINI_API_KEY=your-api-key
-   ./.venv/Scripts/python.exe run.py --batch --mode gemini --seed 42 --steps 50 --max-calls 10 --request-seconds 1
+   ./.venv/Scripts/python.exe mars_colony_3/run.py --batch --mode gemini --seed 42 --steps 50 --max-calls 10 --request-seconds 1
 
 An api key can be obtained at https://aistudio.google.com/api-keys
 
@@ -222,14 +222,14 @@ For the interactive dashboard with the same explicit pacing:
 
 .. code-block:: powershell
 
-   ./.venv/Scripts/python.exe run.py --mode gemini --port 8767 --request-seconds 1
+   ./.venv/Scripts/python.exe mars_colony_3/run.py --mode gemini --port 8767 --request-seconds 1
 
 To remove deliberate pacing and wait only for each real API response, use
 ``--request-seconds 0``:
 
 .. code-block:: powershell
 
-   ./.venv/Scripts/python.exe run.py --batch --mode gemini --seed 42 --steps 50 --max-calls 10 --request-seconds 0
+   ./.venv/Scripts/python.exe mars_colony_3/run.py --batch --mode gemini --seed 42 --steps 50 --max-calls 10 --request-seconds 0
 
 Zero spacing is faster but may encounter provider rate limits. Changing request
 spacing changes wall-clock duration, not simulation time. Use the same value for
@@ -255,12 +255,12 @@ form:
 
 .. code-block:: text
 
-   results/<timestamp>/decisions.csv
+   mars_colony_3/results/<timestamp>/decisions.csv
 
 Read the saved evidence
 -----------------------
 
-Batch runs create a timestamped directory under ``results``:
+Batch runs create a timestamped directory under ``mars_colony_3/results``:
 
 .. list-table:: Batch artifacts
    :header-rows: 1
@@ -305,7 +305,19 @@ Compare separate repositories
 -----------------------------
 
 Each exercise repository contains a self-contained ``analysis.py``. Run it
-inside that repository
+inside that repository; the other repositories do not need to be installed or
+present. Give each implementation a clear label:
+
+.. code-block:: powershell
+
+   # Run in the Folder 1 repository
+   ./.venv/Scripts/python.exe analysis.py --label folder_1_baseline
+
+   # Run in the Folder 2 repository
+   ./.venv/Scripts/python.exe analysis.py --label folder_2_student_rules
+
+   # Run in the Folder 3 repository
+   ./.venv/Scripts/python.exe analysis.py --mode gemini --max-calls 120 --request-seconds 1 --label folder_3_prompt
 
 All three scripts evaluate seeds 10, 20, 30, 40 and 50 for up to 500 ticks by
 default. They print the same outcome table and write ``benchmark.csv`` with the
@@ -315,33 +327,33 @@ the rows identifiable after they are combined. ``summary.csv`` uses the same
 four-column format in every repository: implementation, metric, mean and sample
 standard deviation.
 
-Live benchmarks print every mars_colony_llm API request as it starts. They also print
+Live benchmarks print every Folder 3 API request as it starts. They also print
 the maximum delay implied by request spacing. At 120 calls and one-second
 spacing, pacing adds at most about 2 minutes per seed, plus provider response
 time. A quick pipeline check is:
 
 .. code-block:: powershell
 
-   ./.venv/Scripts/python.exe analysis.py --mode mock --seeds 10 --steps 50 --max-calls 10 --label mars_colony_llm_mock
+   ./.venv/Scripts/python.exe analysis.py --mode mock --seeds 10 --steps 50 --max-calls 10 --label folder_3_mock
 
 For a small live pilot:
 
 .. code-block:: powershell
 
-   ./.venv/Scripts/python.exe analysis.py --mode gemini --seeds 10 --steps 50 --max-calls 10 --request-seconds 1 --label mars_colony_llm_prompt
+   ./.venv/Scripts/python.exe analysis.py --mode gemini --seeds 10 --steps 50 --max-calls 10 --request-seconds 1 --label folder_3_prompt
 
 For the fastest benchmark, remove the deliberate delay:
 
 .. code-block:: powershell
 
-   ./.venv/Scripts/python.exe analysis.py --mode gemini --request-seconds 0 --label mars-colony-llm_prompt
+   ./.venv/Scripts/python.exe analysis.py --mode gemini --request-seconds 0 --label folder_3_prompt
 
 Reducing ``--max-calls`` can shorten a run further, but after that ceiling the
 fallback policy controls new decisions. This changes how much of the experiment
 is LLM-driven. Reducing only ``--request-seconds`` preserves the call budget and
 decision cadence unless rate limiting causes provider failures.
 
-mars-colony-foundation and mars-colony-robot-decisions write ``benchmark.csv`` and ``summary.csv``. mars-colony-llm also
+Folder 1 and Folder 2 write ``benchmark.csv`` and ``summary.csv``. Folder 3 also
 writes ``benchmark.json``, the actual prompt, and per-seed JSONL and CSV decision
 logs. Calculate paired differences after combining the exported tables by
 matching rows on ``seed``; do not compare unrelated seeds.
@@ -371,7 +383,7 @@ Completion checklist
 --------------------
 
 * Original and revised strategy prompts, with a hypothesis and explanation.
-* Results for matched seeds, including mars-colony-foundation and the actual mars-colony-robot-decisions rules.
+* Results for matched seeds, including Folder 1 and the actual Folder 2 rules.
 * Provider/model, cadence, pacing, call limit, API attempts, valid LLM choices,
   continued choices and fallback counts.
 * One traced observation -> API reply/source -> action -> interaction -> colony

@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="prev" title="Mission 01: Keep the Colony Supplied" href="mission_01.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>title - MESA Tutorial 0.1 documentation</title>
+        <title>Prompt tips - MESA Tutorial 0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -174,7 +174,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -192,13 +192,14 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="Introduction%20to%20Mesa.html">Introduction to Mesa</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Mesa fundamentals: agents, model and environment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="agent.html">Agent</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mission_01.html">Mission 01: Keep the Colony Supplied</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">title</a></li>
+  <p class="caption" role="heading"><span class="caption-text">Practical guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mars_colony_setup.html">Mars Colony setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mesa_mars_colony_guide.html">Introduction to Mesa and the Mars colony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mission_01.html">Exercise 1: design robot decision rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mission_02.html">Exercise 2: investigate prompt-driven decisions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mission_02b.html">Exercise 2: investigate prompt-driven decisions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Compare strategies and explain results</a></li>
 </ul>
 
 </div>
@@ -219,7 +220,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="_sources/test.md.txt" title="View this page">
+  <a class="muted-link" href="_sources/tips.md.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -232,60 +233,146 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="title">
-<h1>title<a class="headerlink" href="#title" title="Link to this heading">¶</a></h1>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This is a standard note callout box.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Be careful! This action might overwrite your current configuration.</p>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>You can use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clean</span></code> before building to ensure a fresh render.</p>
-</div>
-<div class="hint admonition">
-<p class="admonition-title">Pro-Tip for Advanced Users</p>
-<p>This is a custom callout box with its own unique title.</p>
-</div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Return a personalized greeting."""</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">"Hello, </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">!"</span>
+          <section id="prompt-tips">
+<h1>Prompt tips<a class="headerlink" href="#prompt-tips" title="Link to this heading">¶</a></h1>
+<section id="balanced-strategy-recommended">
+<h2>1. Balanced strategy — recommended<a class="headerlink" href="#balanced-strategy-recommended" title="Link to this heading">¶</a></h2>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Choose actions using this priority order:
 
-<span class="nb">print</span><span class="p">(</span><span class="n">greet</span><span class="p">(</span><span class="s2">"World"</span><span class="p">))</span>
-</pre></div>
-</div>
-<div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-text">example.py</span><a class="headerlink" href="#id1" title="Link to this code">¶</a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="linenos">2</span><span class="w">    </span><span class="sd">"""Return a personalized greeting."""</span>
-<span class="hll"><span class="linenos">3</span>    <span class="k">return</span> <span class="sa">f</span><span class="s2">"Hello, </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">!"</span> <span class="c1"># This line will be highlighted</span>
-</span></pre></div>
-</div>
-</div>
-<div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text">app.py</span><a class="headerlink" href="#id2" title="Link to this code">¶</a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"This block now has a title bar!"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="note admonition">
-<p class="admonition-title">Script: initialization.py</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+1. If no COLLECT action is available, choose RETURN_BASE when away from base;
+   otherwise choose WAIT.
+2. For every known deposit, calculate:
+   - distance_to_target = Manhattan distance from position to deposit
+   - distance_target_to_base = Manhattan distance from deposit to base
+   - required_energy = distance_to_target + distance_target_to_base + 3
+3. Ignore deposits whose required_energy exceeds the collector's energy.
+4. Prefer deposits that are not listed in other_collector_intentions.
+5. Among the remaining deposits, choose the one with the smallest
+   distance_to_target + distance_target_to_base.
+6. Keep current_target when it remains safe and is not targeted by another
+   collector. Avoid changing targets without a clear benefit.
+7. If no safe deposit exists, choose RETURN_BASE.
+8. Choose WAIT only when neither safe collection nor returning is useful.
 
-<span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">():</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">"docs"</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+The main objective is to deliver as many resources as possible. Secondary
+objectives are keeping collectors operational, reducing unnecessary movement,
+and avoiding duplicate targets.
 </pre></div>
 </div>
+<p>This should provide a reasonable balance between delivered resources, robot survival, distance, and duplicate targets.</p>
+</section>
+<section id="coordination-focused-strategy">
+<h2>2. Coordination-focused strategy<a class="headerlink" href="#coordination-focused-strategy" title="Link to this heading">¶</a></h2>
+<p>Use this if <code class="docutils literal notranslate"><span class="pre">duplicate_target_steps</span></code> is high:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Coordinate strictly with the other collectors.
+
+1. Treat every target in other_collector_intentions as assigned to another
+   collector.
+2. Prefer an unassigned known deposit that can be reached and followed by a
+   safe return to base.
+3. Required energy is:
+   Manhattan(position, deposit) + Manhattan(deposit, base_position) + 3.
+4. Among safe unassigned deposits, choose the one with the smallest total
+   journey distance.
+5. Continue current_target if it remains safe and no other collector targets it.
+6. Select an already assigned deposit only when every safe known deposit is
+   assigned. In that case, choose the nearest safe option.
+7. If no safe deposit exists, choose RETURN_BASE.
+8. Use WAIT only when no deposit is known and the collector is already at base.
+
+Prioritize low duplicate targeting, successful delivery, and robot survival.
+</pre></div>
 </div>
+<p>This should reduce duplication, though strict avoidance may sometimes leave a collector travelling farther than necessary.</p>
+</section>
+<section id="resource-throughput-strategy">
+<h2>3. Resource-throughput strategy<a class="headerlink" href="#resource-throughput-strategy" title="Link to this heading">¶</a></h2>
+<p>Use this to maximize delivered resources and reduce idle time:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Act aggressively while preserving enough energy to return.
+
+1. Never choose WAIT when a safe COLLECT action exists.
+2. For each deposit, calculate the complete journey cost:
+   Manhattan(position, deposit) + Manhattan(deposit, base_position).
+3. A deposit is safe when energy is at least complete journey cost + 2.
+4. Prefer an untargeted safe deposit.
+5. Among safe deposits, choose the one closest to the collector.
+6. Keep moving toward current_target while it remains known and safe.
+7. If every deposit is targeted, still choose the nearest safe deposit rather
+   than waiting.
+8. If no deposit is safe, choose RETURN_BASE.
+
+Maximize resources delivered before the colony runs out. Avoid waiting and
+unnecessary target changes.
+</pre></div>
+</div>
+<p>This may improve collection but could increase duplicate targeting and risk because it uses a smaller energy margin.</p>
+</section>
+<section id="robot-safety-strategy">
+<h2>4. Robot-safety strategy<a class="headerlink" href="#robot-safety-strategy" title="Link to this heading">¶</a></h2>
+<p>Use this if collectors are failing from low energy:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Protect collector energy before optimizing collection.
+
+1. Calculate the Manhattan distance from the collector to base.
+2. Return immediately when energy is less than distance_to_base + 10.
+3. Consider a deposit only when:
+   energy &gt;= Manhattan(position, deposit)
+             + Manhattan(deposit, base_position)
+             + 10.
+4. Prefer deposits not targeted by another collector.
+5. Among safe deposits, choose the one with the shortest complete journey.
+6. Continue current_target only while it satisfies the same safety condition.
+7. If there is no safe deposit, choose RETURN_BASE.
+8. Choose WAIT only at base when no safe deposit is known.
+
+Prioritize zero failed collectors, then delivered resources, then distance.
+</pre></div>
+</div>
+<p>This should improve robot survival but may collect fewer resources because collectors return earlier.</p>
+</section>
+<section id="explicit-scoring-strategy">
+<h2>5. Explicit scoring strategy<a class="headerlink" href="#explicit-scoring-strategy" title="Link to this heading">¶</a></h2>
+<p>This gives the model a numerical comparison rule:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Score each available COLLECT action.
+
+For a deposit:
+- outbound = Manhattan(position, deposit)
+- home = Manhattan(deposit, base_position)
+- duplicate = 1 if another collector targets the deposit, otherwise 0
+- switching = 1 if current_target exists and differs from the deposit,
+  otherwise 0
+- safety_margin = energy - outbound - home
+
+Reject a deposit when safety_margin &lt; 3.
+
+For every remaining deposit calculate:
+
+score = outbound + home + 12 * duplicate + 4 * switching
+
+Choose the COLLECT action with the lowest score.
+If scores tie, choose the lexicographically smallest action name.
+If no deposit passes the safety test, choose RETURN_BASE.
+Choose WAIT only when at base and no safe COLLECT action exists.
+
+Optimize delivered resources while avoiding duplicate assignments and
+unnecessary target switching.
+</pre></div>
+</div>
+<p>This is especially useful experimentally because its behavior is more reproducible and each decision can be explained from the observation.</p>
+<p>For a fair comparison, test each prompt with the same model, seeds, maximum steps, API-call budget, and decision interval. Compare:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">resources_collected</span></code>: higher is better.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">steps_survived</span></code>: higher is better.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">failed_robots</span></code>: lower is better.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">idle_collector_steps</span></code>: generally lower is better.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">duplicate_target_steps</span></code>: generally lower is better.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">distance_travelled</span></code>: interpret together with resources delivered; less distance is only useful if performance remains good.</p></li>
+</ul>
+</section>
 </section>
 
         </article>
@@ -294,17 +381,7 @@
         
         <div class="related-pages">
           
-          <a class="prev-page" href="mission_01.html">
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-              <div class="page-info">
-                <div class="context">
-                  <span>Previous</span>
-                </div>
-                
-                <div class="title">Mission 01: Keep the Colony Supplied</div>
-                
-              </div>
-            </a>
+          
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -323,8 +400,31 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Prompt tips</a><ul>
+<li><a class="reference internal" href="#balanced-strategy-recommended">1. Balanced strategy — recommended</a></li>
+<li><a class="reference internal" href="#coordination-focused-strategy">2. Coordination-focused strategy</a></li>
+<li><a class="reference internal" href="#resource-throughput-strategy">3. Resource-throughput strategy</a></li>
+<li><a class="reference internal" href="#robot-safety-strategy">4. Robot-safety strategy</a></li>
+<li><a class="reference internal" href="#explicit-scoring-strategy">5. Explicit scoring strategy</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

@@ -1,0 +1,138 @@
+# Mars Colony setup
+
+In this assignment, you improve the decision rules of explorer and collector
+robots in a Mars colony simulation. You may use PyCharm, Visual Studio Code,
+or any other Python editor. All commands below must be run from this
+`mars-colony-foundation` folder.
+
+## 1. Get the assignment from GitHub
+
+Open the GitHub repository provided on [Github](https://github.com/mars-settlement-initiative/mars-colony-foundation).
+
+### Option A: download a ZIP (easiest)
+
+1. On the repository page, select **Code** and then **Download ZIP**.
+2. Extract the downloaded ZIP file to a location you can easily find.
+3. Open the extracted project folder. The files for this assignment are in
+   the `mars-colony-foundation` folder.
+
+### Option B: clone with Git
+
+If Git is installed, open a terminal and run:
+
+```text
+git clone https://github.com/mars-settlement-initiative/mars-colony-foundation.git
+cd mars-colony-foundation
+
+```
+
+If you downloaded the ZIP, open a terminal in the extracted `mars-colony-foundation`
+folder before continuing.
+
+
+## 2. Open the assignment folder
+
+- **PyCharm:** File > Open, then select the `mars-colony-foundation` folder.
+- **VS Code:** File > Open Folder, then select the `mars-colony-foundation` folder.
+- **Other editor:** open the `mars-colony-foundation` folder and open a terminal in it.
+
+The terminal prompt should end in `mars-colony-foundation`. You can check this with
+`pwd` on macOS/Linux or `Get-Location` in Windows PowerShell.
+
+## 3. Create a virtual environment
+
+A virtual environment keeps the packages for this assignment separate from
+other Python projects.
+
+Windows (PowerShell):
+
+```{code-block} powershell
+    :caption: Windows (PowerShell):
+    :linenos:
+
+python -m venv .venv
+.\.venv\Scripts\activate
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+
+
+
+
+```{code-block} bash
+    :caption: macOS/Linux:
+        :linenos:
+
+python3 -m venv .venv
+source .venv/bin/activate
+./.venv/bin/python -m pip install --upgrade pip
+./.venv/bin/python -m pip install -r requirements.txt
+```
+
+These commands use the virtual environment directly, so activation is not
+required. In PyCharm or VS Code, choose the Python interpreter inside `.venv`
+if the editor does not select it automatically.
+
+## 4. Check that the simulation works
+
+Run a short simulation in the terminal.
+
+```{code-block} powershell
+      :caption:  Windows (PowerShell):
+        :linenos:
+.\.venv\Scripts\python.exe run.py --batch --steps 20 --seed 42
+```
+
+```{code-block} bash
+    :caption: macOS/Linux:
+        :linenos:
+        
+./.venv/bin/python run.py --batch --steps 20 --seed 42
+```
+
+You should see a `MARS COLONY MISSION REPORT`. Using the same seed makes the
+result reproducible.
+
+## 5. Open the interactive dashboard
+
+```{code-block} powershell
+    :caption: Windows (PowerShell):
+    :linenos:
+
+.\.venv\Scripts\python.exe run.py
+```
+
+```{code-block} bash
+    :caption: macOS/Linux:
+        :linenos:
+        
+./.venv/bin/python run.py
+```
+
+The browser should open at <http://127.0.0.1:8765>. If it does not, open that
+address yourself. Use the controls in the browser to run or reset the model.
+Return to the terminal and press **Ctrl+C** to stop the dashboard.
+
+If port 8765 is already in use, choose another one, for example:
+
+```text
+python run.py --port 8766
+```
+
+When using this shorter command, first activate `.venv` or make sure your
+editor's terminal uses the `.venv` interpreter.
+
+
+## Common problems
+
+- **`python` is not recognized:** reinstall Python and enable **Add Python to
+  PATH**, or try the `py` command on Windows.
+- **`No module named mesa`:** you are using the wrong interpreter. Select the
+  interpreter inside `.venv`, then repeat the install command from step 4.
+- **`requirements.txt` not found:** your terminal is not in the `mars_colony_foundation`
+  folder.
+- **PowerShell blocks activation:** activation is unnecessary; use the full
+  `.\.venv\Scripts\python.exe` commands shown above.
+- **The dashboard does not open:** keep the terminal running and manually open
+  <http://127.0.0.1:8765>.

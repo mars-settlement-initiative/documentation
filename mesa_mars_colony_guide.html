@@ -1,0 +1,639 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Exercise 1: design robot decision rules" href="mission_01.html"><link rel="prev" title="Mars Colony setup" href="mars_colony_setup.html">
+
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>Introduction to Mesa and the Mars colony - MESA Tutorial 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">MESA Tutorial 0.1 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  <span class="sidebar-brand-text">MESA Tutorial 0.1 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Practical guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="mars_colony_setup.html">Mars Colony setup</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Introduction to Mesa and the Mars colony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mission_01.html">Exercise 1: design robot decision rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mission_02.html">Exercise 2: investigate prompt-driven decisions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Compare strategies and explain results</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/mesa_mars_colony_guide.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="introduction-to-mesa-and-the-mars-colony">
+<h1>Introduction to Mesa and the Mars colony<a class="headerlink" href="#introduction-to-mesa-and-the-mars-colony" title="Link to this heading">¶</a></h1>
+<p><strong>Folder:</strong> <code class="docutils literal notranslate"><span class="pre">mars_colony</span></code>. <strong>Task:</strong> read, run and explain the supplied code.
+No implementation is required in this introductory phase, even where a file
+contains a <code class="docutils literal notranslate"><span class="pre">STUDENT</span> <span class="pre">MODIFICATION</span> <span class="pre">AREA</span></code> marker. Coding begins in
+<a class="reference internal" href="mission_01.html"><span class="doc">Exercise 1: design robot decision rules</span></a>.</p>
+<p>Mesa provides the simulation framework; you define what each agent knows and
+how it decides and acts. A multi-agent system (MAS) consists of interacting
+agents whose actions affect a shared environment. In this practical, explorers
+and collectors have different roles, but both contribute to supplying the
+colony’s base.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For further reading, consult the <a class="reference external" href="https://mesa.readthedocs.io/latest/index.html">Mesa documentation</a>. Or you can <a class="reference external" href="https://app.readthedocs.org/projects/mesa/downloads/pdf/latest">download the pdf</a>.</p>
+</div>
+<section id="find-your-way-around-the-code">
+<h2>1. Find your way around the code<a class="headerlink" href="#find-your-way-around-the-code" title="Link to this heading">¶</a></h2>
+<p>Read the files in this order:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">config.py</span></code>: dimensions, populations, energy and experiment settings.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">model.py</span></code>: initialization, grid placement, activation and data collection.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">agents.py</span></code>: shared mechanics and explorer/collector decision policies.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">run.py</span></code> and <code class="docutils literal notranslate"><span class="pre">app.py</span></code>: execution and visualization.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">analysis.py</span></code>: a single experiment exporting <code class="docutils literal notranslate"><span class="pre">mars_results.csv</span></code>.
+See <a class="reference internal" href="experiments.html"><span class="doc">Compare strategies and explain results</span></a> for the three-folder comparison.</p></li>
+</ol>
+<p>The key concepts have corresponding objects in the Mars code:</p>
+<div class="table-wrapper colwidths-given docutils container" id="id1">
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">Mesa concepts in the practical</span><a class="headerlink" href="#id1" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 18.0%" />
+<col style="width: 43.0%" />
+<col style="width: 39.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Concept</p></th>
+<th class="head"><p>Mars code</p></th>
+<th class="head"><p>Responsibility</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Agent</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mesa.Agent</span></code>; <code class="docutils literal notranslate"><span class="pre">RobotAgent</span></code>, <code class="docutils literal notranslate"><span class="pre">ExplorerAgent</span></code>, <code class="docutils literal notranslate"><span class="pre">CollectorAgent</span></code>
+and <code class="docutils literal notranslate"><span class="pre">ResourceAgent</span></code></p></td>
+<td><p>Individual state and behaviour; resource deposits are also agents.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Model</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MarsColonyModel(mesa.Model)</span></code></p></td>
+<td><p>Creates agents and applies colony-wide rules.</p></td>
+</tr>
+<tr class="row-even"><td><p>Environment</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MultiGrid</span></code>, deposits, base and shared information</p></td>
+<td><p>Makes movement, discovery and interaction possible.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Activation</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">self.agents.select(...)</span></code> and <code class="docutils literal notranslate"><span class="pre">shuffle_do(&quot;step&quot;)</span></code></p></td>
+<td><p>Gives selected robots turns in a shuffled order.</p></td>
+</tr>
+<tr class="row-even"><td><p>Measurement</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DataCollector</span></code></p></td>
+<td><p>Records model state for plots and analysis.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="understand-the-shared-world">
+<h2>2. Understand the shared world<a class="headerlink" href="#understand-the-shared-world" title="Link to this heading">¶</a></h2>
+<p>The non-wrapping 20 by 20 grid contains a central base, two explorers, three
+collectors and 12 deposits of 20 units. The base starts with 100 units and
+consumes one per tick. Robots start with 100 energy; collectors can carry 10
+units. Locate these settings in <code class="docutils literal notranslate"><span class="pre">config.py</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">ResourceAgent</span></code> represents a stationary deposit. <code class="docutils literal notranslate"><span class="pre">RobotAgent</span></code> supplies
+movement, energy accounting and recharge. <code class="docutils literal notranslate"><span class="pre">ExplorerAgent</span></code> and
+<code class="docutils literal notranslate"><span class="pre">CollectorAgent</span></code> inherit those shared mechanics but implement different
+decisions.</p>
+</section>
+<section id="agents-registration-state-and-roles">
+<h2>3. Agents: registration, state and roles<a class="headerlink" href="#agents-registration-state-and-roles" title="Link to this heading">¶</a></h2>
+<p>In <code class="docutils literal notranslate"><span class="pre">agents.py</span></code>, the two base agent classes are <code class="docutils literal notranslate"><span class="pre">ResourceAgent</span></code> and
+<code class="docutils literal notranslate"><span class="pre">RobotAgent</span></code>. Each calls <code class="docutils literal notranslate"><span class="pre">super().__init__(model)</span></code> to initialize the Mesa
+agent and register it with its model:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ResourceAgent</span><span class="p">(</span><span class="n">mesa</span><span class="o">.</span><span class="n">Agent</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="n">RESOURCE_AMOUNT</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="c1"># Remaining initialization is omitted here.</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">RobotAgent</span><span class="p">(</span><span class="n">mesa</span><span class="o">.</span><span class="n">Agent</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="n">ROBOT_INITIAL_ENERGY</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="c1"># Remaining initialization is omitted here.</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ExplorerAgent</span></code> and <code class="docutils literal notranslate"><span class="pre">CollectorAgent</span></code> inherit common functionality from
+<code class="docutils literal notranslate"><span class="pre">RobotAgent</span></code>.</p>
+<section id="individual-agent-attributes">
+<h3>Individual agent attributes<a class="headerlink" href="#individual-agent-attributes" title="Link to this heading">¶</a></h3>
+<p>A <code class="docutils literal notranslate"><span class="pre">RobotAgent</span></code> stores its maximum and current energy, whether it is active,
+and a distance counter:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">max_energy</span> <span class="o">=</span> <span class="n">energy</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">energy</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">distance_travelled</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>A <code class="docutils literal notranslate"><span class="pre">CollectorAgent</span></code> additionally stores its cargo, carrying capacity and
+current target:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">cargo</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">capacity</span> <span class="o">=</span> <span class="n">COLLECTOR_CAPACITY</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">target_resource</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>A <code class="docutils literal notranslate"><span class="pre">ResourceAgent</span></code> stores how much material remains and whether the deposit
+has been discovered:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">amount</span> <span class="o">=</span> <span class="n">amount</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">discovered</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>These are <em>agent</em> attributes because they describe an individual robot or
+deposit, not the colony as a whole.</p>
+</section>
+</section>
+<section id="model-shared-state-and-placement">
+<h2>4. Model: shared state and placement<a class="headerlink" href="#model-shared-state-and-placement" title="Link to this heading">¶</a></h2>
+<p>The model in <code class="docutils literal notranslate"><span class="pre">model.py</span></code> owns colony-wide state, including base supplies, the
+consumption rate and the set of discovered resource locations:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">base_resources</span> <span class="o">=</span> <span class="n">initial_base_resources</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">consumption_rate</span> <span class="o">=</span> <span class="n">consumption_rate</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">known_resources</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The model initializes Mesa with <code class="docutils literal notranslate"><span class="pre">super().__init__(seed=seed)</span></code> and uses
+<code class="docutils literal notranslate"><span class="pre">self.random</span></code> for random decisions. Record the seed when you want to repeat
+a run.</p>
+<p>Registration is <strong>not</strong> the same as placement. The model places agents on its
+grid, for example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">place_agent</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After placement, an agent’s <code class="docutils literal notranslate"><span class="pre">self.pos</span></code> gives its grid position.</p>
+<section id="individual-and-shared-information">
+<h3>Individual and shared information<a class="headerlink" href="#individual-and-shared-information" title="Link to this heading">¶</a></h3>
+<p>Robots hold their own energy and movement state; collectors additionally hold
+cargo and targets. The model holds <code class="docutils literal notranslate"><span class="pre">base_resources</span></code> and
+<code class="docutils literal notranslate"><span class="pre">known_resources</span></code>. Deposits hold their remaining <code class="docutils literal notranslate"><span class="pre">amount</span></code> and
+<code class="docutils literal notranslate"><span class="pre">discovered</span></code> status.</p>
+<p>An agent can access its model through <code class="docutils literal notranslate"><span class="pre">self.model</span></code>, but technical access to
+model objects is not permission for its decision policy to use all information.
+Explorers must discover deposits; collectors select from <em>known</em> locations.
+Keep that information boundary when designing behaviour rules.</p>
+</section>
+</section>
+<section id="environment-space-and-interaction">
+<h2>5. Environment: space and interaction<a class="headerlink" href="#environment-space-and-interaction" title="Link to this heading">¶</a></h2>
+<p>The practical uses <code class="docutils literal notranslate"><span class="pre">mesa.space.MultiGrid</span></code> with integer <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>
+positions, <code class="docutils literal notranslate"><span class="pre">place_agent</span></code>, <code class="docutils literal notranslate"><span class="pre">move_agent</span></code> and
+<code class="docutils literal notranslate"><span class="pre">get_cell_list_contents</span></code>. Multiple agents can occupy the same cell.
+<code class="docutils literal notranslate"><span class="pre">torus=False</span></code> means movement does not wrap around at the grid boundaries.</p>
+<p>The robots’ horizontal/vertical movement and energy costs come from the
+application’s methods; <code class="docutils literal notranslate"><span class="pre">MultiGrid</span></code> does not impose them automatically.
+Other Mesa tutorials may use <code class="docutils literal notranslate"><span class="pre">CellAgent</span></code> and <code class="docutils literal notranslate"><span class="pre">mesa.discrete_space</span></code>; those
+use a different spatial interface. Follow the <code class="docutils literal notranslate"><span class="pre">MultiGrid</span></code> interface in
+this practical.</p>
+<p>Explorers publish discovered positions to <code class="docutils literal notranslate"><span class="pre">known_resources</span></code>. Collectors
+read the same shared information. This is closer to a shared information board
+than explicit message passing or negotiation. A target is an intention, <strong>not</strong>
+a reservation: two collectors can independently select the same deposit.</p>
+</section>
+<section id="trace-one-simulation-tick">
+<h2>6. Trace one simulation tick<a class="headerlink" href="#trace-one-simulation-tick" title="Link to this heading">¶</a></h2>
+<p>An agent’s <code class="docutils literal notranslate"><span class="pre">step()</span></code> is one local turn. In <code class="docutils literal notranslate"><span class="pre">MarsColonyModel.step</span></code>, the model
+selects robot agents and activates them in shuffled order:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">robots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">agent</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">RobotAgent</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">robots</span><span class="o">.</span><span class="n">shuffle_do</span><span class="p">(</span><span class="s2">"step"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Shuffling changes which robot acts first; activation is still <strong>sequential</strong>.
+For example, a collector acting later in the same tick could find that an
+earlier collector has emptied its target deposit. Resource agents are
+registered with Mesa but are excluded from this robot activation.</p>
+<p>After the robots act, the model subtracts base consumption, increments
+<code class="docutils literal notranslate"><span class="pre">steps_survived</span></code>, collects measurements and stops if supplies are depleted.
+It also records the initial state before any turns.</p>
+<section id="explorer-decisions">
+<h3>Explorer decisions<a class="headerlink" href="#explorer-decisions" title="Link to this heading">¶</a></h3>
+<p>An explorer checks its current cell for a deposit and publishes newly found
+locations in <code class="docutils literal notranslate"><span class="pre">known_resources</span></code>. Below 20 energy it returns toward base;
+otherwise, it moves randomly. It then checks for recharge.</p>
+</section>
+<section id="collector-decisions">
+<h3>Collector decisions<a class="headerlink" href="#collector-decisions" title="Link to this heading">¶</a></h3>
+<p>A collector first collects at its existing target, unloads at base and checks
+for recharge. Its decision block then returns toward base below 25 energy,
+returns with cargo, or chooses and approaches the nearest known resource.
+A deposit reached through movement is collected on a <strong>later</strong> turn; cargo
+arriving at base is likewise unloaded on a <strong>later</strong> turn. Notice the
+separation between shared mechanics and agent-specific decisions.</p>
+</section>
+<section id="details-worth-noticing">
+<h3>Details worth noticing<a class="headerlink" href="#details-worth-noticing" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Targeted movement goes horizontally first, then vertically.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">move_one_step_towards</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+<span class="o">...</span>
+    <span class="k">if</span> <span class="n">current_x</span> <span class="o">&lt;</span> <span class="n">target_x</span><span class="p">:</span>
+        <span class="n">new_x</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">elif</span> <span class="n">current_x</span> <span class="o">&gt;</span> <span class="n">target_x</span><span class="p">:</span>
+        <span class="n">new_x</span> <span class="o">-=</span> <span class="mi">1</span>
+
+    <span class="k">elif</span> <span class="n">current_y</span> <span class="o">&lt;</span> <span class="n">target_y</span><span class="p">:</span>
+        <span class="n">new_y</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">elif</span> <span class="n">current_y</span> <span class="o">&gt;</span> <span class="n">target_y</span><span class="p">:</span>
+        <span class="n">new_y</span> <span class="o">-=</span> <span class="mi">1</span>
+
+    <span class="n">new_position</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_x</span><span class="p">,</span> <span class="n">new_y</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>The movement helper charges energy and increments its distance counter even
+when called with the current position. Thus, the counter does not always
+equal geometric displacement. Preserve this mechanic when comparing
+exercises.</p></li>
+<li><p>Inactive robots immediately return from <code class="docutils literal notranslate"><span class="pre">step()</span></code>. Examine where recharge
+is called: reaching zero energy does not guarantee later recovery.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">&lt;</span> <span class="n">EXPLORER_RETURN_THRESHOLD</span><span class="p">:</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">move_one_step_towards</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">base_position</span>
+    <span class="p">)</span>
+
+<span class="k">else</span><span class="p">:</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">random_move</span><span class="p">()</span>
+
+<span class="bp">self</span><span class="o">.</span><span class="n">recharge_if_at_base</span><span class="p">()</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Empty deposits are removed from both the grid and Mesa’s agent registry;
+partially collected deposits remain available.</p></li>
+<li><p>A remembered target can become stale if another robot empties its deposit.</p></li>
+</ul>
+</section>
+</section>
+<section id="connect-local-decisions-to-colony-outcomes">
+<h2>7. Connect local decisions to colony outcomes<a class="headerlink" href="#connect-local-decisions-to-colony-outcomes" title="Link to this heading">¶</a></h2>
+<p>Use the following explanation chain throughout the practical:</p>
+<p><strong>Individual decision → interaction pattern → colony outcome.</strong></p>
+<p>For example, two collectors may each reasonably choose the nearest known
+deposit, yet overlap in their journeys because targets are not reserved.
+Changing a target-selection rule might reduce overlapping journeys and alter
+delivery timing. Test this hypothesis: fewer overlaps alone do not prove
+longer survival, and one deposit may supply more than one load.</p>
+<p><code class="docutils literal notranslate"><span class="pre">DataCollector</span></code> records measurements used to examine such outcomes.
+Compare survival, deliveries and distance rather than concluding that a
+locally plausible rule necessarily improves the colony.</p>
+</section>
+<section id="explore-the-baseline-and-check-your-understanding">
+<h2>8. Explore the baseline and check your understanding<a class="headerlink" href="#explore-the-baseline-and-check-your-understanding" title="Link to this heading">¶</a></h2>
+<section id="exploration-checklist">
+<h3>Exploration checklist<a class="headerlink" href="#exploration-checklist" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Run seed 42 and record survival, deliveries and distance.</p></li>
+<li><p>Locate the lines that register an agent and place it on the grid.</p></li>
+<li><p>Follow an explorer from perception to publication of a resource location.</p></li>
+<li><p>Follow a collector through selection, travel, collection and unloading.</p></li>
+<li><p>Explain one interaction between robots using an observed example.</p></li>
+<li><p>Explain why a sensible local choice might produce a poor collective outcome.</p></li>
+</ol>
+</section>
+<section id="check-your-understanding">
+<h3>Check your understanding<a class="headerlink" href="#check-your-understanding" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Why is cargo agent state but base supplies model state?</p></li>
+<li><p>Why are resource deposits registered agents but excluded from robot
+activation?</p></li>
+<li><p>How could activation order affect collectors approaching the same deposit?</p></li>
+<li><p>What information can a collector use, and what information is hidden from
+its decision policy?</p></li>
+<li><p>Which features are provided by Mesa, and which are application-specific
+rules?</p></li>
+</ol>
+<p>Bring your baseline report and explanation to Exercise 1. Keep the
+<code class="docutils literal notranslate"><span class="pre">mars_colony</span></code> folder unchanged as the reference for subsequent experiments.</p>
+<p>For API details, consult Mesa’s <a class="reference external" href="https://mesa.readthedocs.io/stable/apis/agent.html">Agent reference</a>, <a class="reference external" href="https://mesa.readthedocs.io/stable/apis/space.html">space reference</a> and <a class="reference external" href="https://mesa.readthedocs.io/stable/apis/datacollection.html">DataCollector
+reference</a>.</p>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="mission_01.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Exercise 1: design robot decision rules</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="mars_colony_setup.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Mars Colony setup</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, K. Rigos
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Introduction to Mesa and the Mars colony</a><ul>
+<li><a class="reference internal" href="#find-your-way-around-the-code">1. Find your way around the code</a></li>
+<li><a class="reference internal" href="#understand-the-shared-world">2. Understand the shared world</a></li>
+<li><a class="reference internal" href="#agents-registration-state-and-roles">3. Agents: registration, state and roles</a><ul>
+<li><a class="reference internal" href="#individual-agent-attributes">Individual agent attributes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#model-shared-state-and-placement">4. Model: shared state and placement</a><ul>
+<li><a class="reference internal" href="#individual-and-shared-information">Individual and shared information</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#environment-space-and-interaction">5. Environment: space and interaction</a></li>
+<li><a class="reference internal" href="#trace-one-simulation-tick">6. Trace one simulation tick</a><ul>
+<li><a class="reference internal" href="#explorer-decisions">Explorer decisions</a></li>
+<li><a class="reference internal" href="#collector-decisions">Collector decisions</a></li>
+<li><a class="reference internal" href="#details-worth-noticing">Details worth noticing</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#connect-local-decisions-to-colony-outcomes">7. Connect local decisions to colony outcomes</a></li>
+<li><a class="reference internal" href="#explore-the-baseline-and-check-your-understanding">8. Explore the baseline and check your understanding</a><ul>
+<li><a class="reference internal" href="#exploration-checklist">Exploration checklist</a></li>
+<li><a class="reference internal" href="#check-your-understanding">Check your understanding</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=2709fde1"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = '';</script>
+    <script>let toggleHintHide = '';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    </body>
+</html>

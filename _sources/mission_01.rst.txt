@@ -1,15 +1,20 @@
 Exercise 1: design robot decision rules
 ========================================
 
-**Working folder:** ``mars_colony_2``. **Edit:** decision logic in ``agents.py``.
+**Working folder:** ``mars-colony-robot-decisions``, found here_.
+
+**Edit:** decision logic in ``agents.py``.
+
+.. _here: https://github.com/mars-settlement-initiative/mars-colony-robot-decisions.git
+
 Your goal is to turn an observation from the introduction into a rule change,
 then explain its effect on the multi-agent system.
 
 What changes from the introduction?
 ------------------------------------
 
-Folder 2 starts with the same baseline decision behaviour and world settings
-as Folder 1. Some constructor defaults are written as literals rather than
+Project mars-colony-robot-decisions starts with the same baseline decision behaviour and world settings
+as the example project mars_colony. Some constructor defaults are written as literals rather than
 imported constants, but their supplied values agree. There is no new scheduler
 or space API to learn here: you change policies inside the existing Mesa agents.
 
@@ -47,7 +52,7 @@ Choose a question
 
 Start with one change. Improving every component at once makes the result
 harder to explain. For a focused comparison with Exercise 2, choose a collector
-policy: Folder 3 retains the original explorer rules.
+policy: Exercise2 retains the original explorer rules.
 
 Implementation workflow
 ------------------------

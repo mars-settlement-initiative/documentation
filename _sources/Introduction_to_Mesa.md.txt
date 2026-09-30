@@ -5,6 +5,17 @@ its information and its decision rules. A multi-agent system (MAS) contains
 interacting agents whose actions affect a shared environment. Explorers and
 collectors have different roles but depend on each other to supply the base.
 
+```{admonition} Info
+:class: note
+
+For further reading on Mesa, see [Mesa documentation](https://mesa.readthedocs.io/latest/index.html).
+
+or you can [download the pdf](https://app.readthedocs.org/projects/mesa/downloads/pdf/latest)
+
+```
+
+
+
 ## Map the concepts to the code
 
 | Concept | Mars code | Responsibility |
@@ -17,9 +28,102 @@ collectors have different roles but depend on each other to supply the base.
 
 ## Registration and placement
 
-In `agents.py`, `super().__init__(model)` initializes a Mesa agent and registers
-it with the model. In `model.py`, `grid.place_agent(agent, position)` places it
-in space. Registration alone does not assign a grid location. After placement,
+In `agents.py`, we introduce two agent types, the ResourceAgent and the RobotAgent. Each agent 
+is initialized by`super().__init__(model)` and registered with the model.
+
+
+
+```{code-block} python
+class ResourceAgent(mesa.Agent):
+     def __init__(self, model, amount=RESOURCE_AMOUNT):
+        super().__init__(model)
+        ...
+```  
+
+```{code-block} python
+class RobotAgent(mesa.Agent):
+    def __init__(self, model, energy=ROBOT_INITIAL_ENERGY):
+        super().__init__(model)
+        ...
+```  
+`ExplorerAgent` and `CollectorAgent` inherit common functionality from `RobotAgent`.
+
+### Agent attributes
+
+A `RobotAgent` holds the attributes (variables) `energy`, `active` and `distance_travelled`
+```{code-block} python
+:emphasize-lines: 5-7
+
+    def __init__(self, model, energy=ROBOT_INITIAL_ENERGY):
+        super().__init__(model)
+
+        self.max_energy = energy
+        self.energy = energy
+        self.active = True
+        self.distance_travelled = 0
+```
+
+A `CollectorAgent` additionally holds
+`cargo`, `capacity` and `target_resource`.
+```{code-block} python
+:emphasize-lines: 4-6
+    def __init__(self, model, energy=100):
+        super().__init__(model, energy)
+
+        self.cargo = 0
+        self.capacity = COLLECTOR_CAPACITY
+        self.target_resource = None
+```
+
+The `ResourceAgent` holds `amount` and `discovered`.
+```{code-block} python
+:emphasize-lines: 4-5
+    def __init__(self, model, amount=RESOURCE_AMOUNT):
+        super().__init__(model)
+
+        self.amount = amount
+        self.discovered = False 
+```
+### Model attributes
+The model, found in file `model.py` owns `base_resources` and `known_resources`. 
+
+```{code-block} python
+:emphasize-lines: 1,5,10
+
+self.base_resources = (
+            initial_base_resources
+        )
+
+self.consumption_rate = (
+            consumption_rate
+        )
+
+# Shared information available to robots.
+self.known_resources = set()
+```
+A deposit owns `amount` and `discovered`.
+
+
+
+`self.model` gives agents access to the simulation. Technical access to objects
+does not mean a policy should know everything: explorers must discover deposits,
+and collectors use known locations. Respect that information boundary.
+
+## Model
+
+The model initializes Mesa with `super().__init__(seed=seed)`. The supplied
+code uses `self.random` for random decisions. Record the seed to repeat a run.
+
+In `model.py`, agents are placed in space. 
+
+```{code-block} python
+ self.grid.place_agent(
+                resource,
+                position
+)
+```
+
+Registration alone does not assign a grid location. After placement,
 `self.pos` gives its position.
 
 The model initializes Mesa with `super().__init__(seed=seed)`. The supplied
