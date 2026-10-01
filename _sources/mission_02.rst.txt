@@ -1,7 +1,12 @@
 Exercise 2: investigate prompt-driven decisions
 ================================================
 
-**Working folder:** ``mars_colony_llm``. **Edit:** only the strategy section below
+**Working folder:** ``mars_colony_llm``, found here_.
+
+**Edit:** only the strategy section below
+
+.. _here: https://github.com/mars-settlement-initiative/mars-colony-llm.git
+
 ``CHALLENGE 2: STUDENTS MAY EDIT THE STRATEGY BELOW`` in ``prompt.txt``.
 Investigate whether a prompt produces useful collector decisions and how those
 decisions affect interactions and colony survival.

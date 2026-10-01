@@ -1,7 +1,12 @@
 Introduction to Mesa and the Mars colony
 ========================================
 
-**Folder:** ``mars_colony``. **Task:** read, run and explain the supplied code.
+**Folder:** ``mars-colony-foundation`` found here_.
+
+**Task:** read, run and explain the supplied code.
+
+.. _here: https://github.com/mars-settlement-initiative/mars-colony-foundation.git
+
 No implementation is required in this introductory phase, even where a file
 contains a ``STUDENT MODIFICATION AREA`` marker. Coding begins in
 :doc:`mission_01`.
@@ -320,7 +325,7 @@ Check your understanding
    rules?
 
 Bring your baseline report and explanation to Exercise 1. Keep the
-``mars_colony`` folder unchanged as the reference for subsequent experiments.
+``mars-colony-foundation`` folder unchanged as the reference for subsequent experiments.
 
 For API details, consult Mesa's `Agent reference
 <https://mesa.readthedocs.io/stable/apis/agent.html>`_, `space reference
